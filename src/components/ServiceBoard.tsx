@@ -1,5 +1,5 @@
 import { CaretDown } from "@phosphor-icons/react";
-import { useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { services, type Service } from "../app/site-data";
 
 const serviceImages: Record<Service["id"], { src: string; alt: string }> = {
@@ -59,9 +59,25 @@ function ServiceDetails({ service, mobile = false }: { service: Service; mobile?
   );
 }
 
+function useDesktopServiceBoard() {
+  const query = "(min-width: 768px)";
+  const [isDesktop, setIsDesktop] = useState(() => window.matchMedia(query).matches);
+
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    const update = (event: MediaQueryListEvent) => setIsDesktop(event.matches);
+    setIsDesktop(media.matches);
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  return isDesktop;
+}
+
 export function ServiceBoard() {
   const [activeId, setActiveId] = useState<Service["id"]>("exterior");
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const isDesktop = useDesktopServiceBoard();
   const activeService = services.find((service) => service.id === activeId) ?? services[0];
 
   const selectAndFocus = (index: number) => {
@@ -85,75 +101,79 @@ export function ServiceBoard() {
 
   return (
     <div className="service-board">
-      <div className="service-board__desktop">
-        <div className="service-board__tabs" role="tablist" aria-label="Detailing services">
-          {services.map((service, index) => {
+      {isDesktop ? (
+        <div className="service-board__desktop">
+          <div className="service-board__tabs" role="tablist" aria-label="Detailing services">
+            {services.map((service, index) => {
+              const isActive = service.id === activeId;
+              return (
+                <button
+                  className="service-board__tab"
+                  data-active={isActive}
+                  id={`service-tab-${service.id}`}
+                  key={service.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  aria-controls={`service-panel-${service.id}`}
+                  tabIndex={isActive ? 0 : -1}
+                  ref={(node) => {
+                    tabRefs.current[index] = node;
+                  }}
+                  onClick={() => setActiveId(service.id)}
+                  onKeyDown={(event) => handleTabKeyDown(event, index)}
+                >
+                  <span>{service.name}</span>
+                  <small>{service.price}</small>
+                </button>
+              );
+            })}
+          </div>
+
+          <div
+            className="service-board__panel"
+            id={`service-panel-${activeService.id}`}
+            role="tabpanel"
+            aria-labelledby={`service-tab-${activeService.id}`}
+            tabIndex={0}
+          >
+            <ServiceDetails service={activeService} />
+          </div>
+        </div>
+      ) : (
+        <div className="service-board__mobile">
+          {services.map((service) => {
             const isActive = service.id === activeId;
             return (
-              <button
-                className="service-board__tab"
-                data-active={isActive}
-                id={`service-tab-${service.id}`}
-                key={service.id}
-                type="button"
-                role="tab"
-                aria-selected={isActive}
-                aria-controls={`service-panel-${service.id}`}
-                tabIndex={isActive ? 0 : -1}
-                ref={(node) => { tabRefs.current[index] = node; }}
-                onClick={() => setActiveId(service.id)}
-                onKeyDown={(event) => handleTabKeyDown(event, index)}
-              >
-                <span>{service.name}</span>
-                <small>{service.price}</small>
-              </button>
+              <div className="service-board__mobile-item" key={service.id}>
+                <button
+                  className="service-board__mobile-trigger"
+                  type="button"
+                  aria-expanded={isActive}
+                  aria-controls={`service-mobile-panel-${service.id}`}
+                  onClick={() => setActiveId(service.id)}
+                >
+                  <span>
+                    <strong>{service.name}</strong>
+                    <small>{service.price}</small>
+                  </span>
+                  <CaretDown size={20} weight="bold" aria-hidden="true" />
+                </button>
+                {isActive && (
+                  <div
+                    className="service-board__mobile-panel"
+                    id={`service-mobile-panel-${service.id}`}
+                    role="region"
+                    aria-label={`${service.name} details`}
+                  >
+                    <ServiceDetails service={service} mobile />
+                  </div>
+                )}
+              </div>
             );
           })}
         </div>
-
-        <div
-          className="service-board__panel"
-          id={`service-panel-${activeService.id}`}
-          role="tabpanel"
-          aria-labelledby={`service-tab-${activeService.id}`}
-          tabIndex={0}
-        >
-          <ServiceDetails service={activeService} />
-        </div>
-      </div>
-
-      <div className="service-board__mobile">
-        {services.map((service) => {
-          const isActive = service.id === activeId;
-          return (
-            <div className="service-board__mobile-item" key={service.id}>
-              <button
-                className="service-board__mobile-trigger"
-                type="button"
-                aria-expanded={isActive}
-                aria-controls={`service-mobile-panel-${service.id}`}
-                onClick={() => setActiveId(service.id)}
-              >
-                <span>
-                  <strong>{service.name}</strong>
-                  <small>{service.price}</small>
-                </span>
-                <CaretDown size={20} weight="bold" aria-hidden="true" />
-              </button>
-              {isActive && (
-                <div
-                  className="service-board__mobile-panel"
-                  id={`service-mobile-panel-${service.id}`}
-                  role="region"
-                  aria-label={`${service.name} details`}
-                >
-                  <ServiceDetails service={service} mobile />
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
+      )}
     </div>
   );
 }

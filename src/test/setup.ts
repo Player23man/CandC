@@ -31,10 +31,8 @@ class TestIntersectionObserver implements IntersectionObserver {
 
 globalThis.IntersectionObserver = TestIntersectionObserver;
 
-Object.defineProperty(window, "matchMedia", {
-  writable: true,
-  value: (query: string): MediaQueryList => ({
-    matches: query.includes("prefers-reduced-motion"),
+const defaultMatchMedia = (query: string): MediaQueryList => ({
+    matches: query === "(min-width: 768px)" || query.includes("prefers-reduced-motion"),
     media: query,
     onchange: null,
     addListener: () => undefined,
@@ -42,9 +40,15 @@ Object.defineProperty(window, "matchMedia", {
     addEventListener: () => undefined,
     removeEventListener: () => undefined,
     dispatchEvent: () => false
-  })
+  });
+
+Object.defineProperty(window, "matchMedia", {
+  configurable: true,
+  writable: true,
+  value: defaultMatchMedia
 });
 
 afterEach(() => {
   document.body.innerHTML = "";
+  window.matchMedia = defaultMatchMedia;
 });

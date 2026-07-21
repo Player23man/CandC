@@ -1,5 +1,6 @@
 import { ArrowRight } from "@phosphor-icons/react";
 import { Link } from "react-router-dom";
+import { CampaignHero } from "../components/CampaignHero";
 import { QuoteCta } from "../components/QuoteCta";
 import { Reveal } from "../components/Reveal";
 import { ServiceBoard } from "../components/ServiceBoard";
@@ -7,28 +8,27 @@ import { ServiceBoard } from "../components/ServiceBoard";
 export function HomePage() {
   return (
     <main id="main-content">
-      <section className="home-hero" aria-labelledby="home-hero-title">
-        <img
-          className="home-hero__image"
-          src="/images/detail-process.jpg"
-          alt="White performance car under studio lighting"
-          fetchPriority="high"
-        />
-        <div className="home-hero__scrim" aria-hidden="true" />
-        <div className="shell home-hero__content">
-          <div>
-            <h1 id="home-hero-title">Finished with intent.</h1>
-            <p>Shop and mobile detailing, paint correction, and ceramic coating in Channahon.</p>
-            <div className="home-hero__actions">
-              <Link className="button button--primary" to="/contact">Get a quote</Link>
-              <Link className="hero-link" to="/portfolio">
-                View our work
-                <ArrowRight size={19} weight="bold" aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CampaignHero
+        layout="home"
+        title="Finished with intent."
+        description="Shop and mobile detailing, paint correction, and ceramic coating in Channahon."
+        image={{
+          src: "/images/detail-process.jpg",
+          srcSet: "/images/detail-process-960.jpg 960w, /images/detail-process.jpg 1600w",
+          sizes: "100vw",
+          alt: "White performance car under studio lighting",
+          fetchPriority: "high"
+        }}
+        actions={
+          <>
+            <Link className="button button--primary" to="/contact">Get a quote</Link>
+            <Link className="hero-link" to="/portfolio">
+              View our work
+              <ArrowRight size={19} weight="bold" aria-hidden="true" />
+            </Link>
+          </>
+        }
+      />
 
       <section className="service-board-section" aria-labelledby="service-board-title">
         <div className="shell">
@@ -55,21 +55,32 @@ export function HomePage() {
               <ArrowRight size={18} weight="bold" aria-hidden="true" />
             </Link>
           </Reveal>
-          <div className="portfolio-preview">
-            <Reveal className="portfolio-preview__lead">
-              <img src="/images/gallery-suv.jpg" alt="Black vehicle being hand washed" loading="lazy" />
+          <div className="finish-spread">
+            <Reveal className="finish-spread__lead">
+              <figure>
+                <img src="/images/gallery-suv.jpg" alt="Black vehicle being hand washed" loading="lazy" />
+                <figcaption>Black vehicle, hand washed</figcaption>
+              </figure>
             </Reveal>
-            <Reveal className="portfolio-preview__small" delay={0.06}>
-              <img src="/images/gallery-sport.jpg" alt="Glossy red vehicle exterior" loading="lazy" />
-            </Reveal>
-            <Reveal className="portfolio-preview__small portfolio-preview__small--offset" delay={0.12}>
-              <img src="/images/ceramic-display.jpg" alt="Ceramic coating display on a red vehicle" loading="lazy" />
-            </Reveal>
+            <div className="finish-spread__supporting">
+              <Reveal className="finish-spread__supporting-item" delay={0.06}>
+                <figure>
+                  <img src="/images/gallery-sport.jpg" alt="Glossy red vehicle exterior" loading="lazy" />
+                  <figcaption>Glossy red vehicle exterior</figcaption>
+                </figure>
+              </Reveal>
+              <Reveal className="finish-spread__supporting-item finish-spread__supporting-item--offset" delay={0.12}>
+                <figure>
+                  <img src="/images/ceramic-display.jpg" alt="Ceramic coating display on a red vehicle" loading="lazy" />
+                  <figcaption>Ceramic coating display</figcaption>
+                </figure>
+              </Reveal>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="testimonial" aria-label="Customer testimonial">
+      <section className="testimonial testimonial--print" aria-label="Customer testimonial">
         <div className="shell testimonial__inner">
           <Reveal>
             <blockquote>

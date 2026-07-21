@@ -11,6 +11,7 @@ describe("HomePage", () => {
       </MemoryRouter>
     );
 
+    expect(document.querySelector(".campaign-hero--home")).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Finished with intent." })).toBeVisible();
     expect(screen.getByRole("tab", { name: /Exterior Detail/ })).toBeVisible();
     expect(screen.getByRole("tab", { name: /Paint Correction/ })).toHaveTextContent("From $600");
@@ -27,6 +28,8 @@ describe("HomePage", () => {
     expect(screen.getByRole("heading", { name: "Choose the work your vehicle needs." })).toBeVisible();
     expect(screen.queryByRole("heading", { name: "Built around what your vehicle needs." })).not.toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "What the work includes." })).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "The finish speaks for itself." })).toBeVisible();
+    expect(document.querySelector(".testimonial--print")).toBeInTheDocument();
     expect(screen.getByText("Verified customer review")).toBeVisible();
     expect(screen.getByText("2022 Tucson owner")).toBeVisible();
   });

@@ -1,6 +1,6 @@
-import { ArrowRight, Phone } from "@phosphor-icons/react";
+import { ArrowRight } from "@phosphor-icons/react";
 import { Link } from "react-router-dom";
-import { businessProfile } from "../app/site-data";
+import { SpecialistRail } from "./SpecialistRail";
 
 export function QuoteCta() {
   return (
@@ -18,28 +18,7 @@ export function QuoteCta() {
           </Link>
         </div>
 
-        <div className="quote-cta__specialists" aria-label="Call a detailing specialist">
-          <a className="quote-cta__specialist" href={`tel:${businessProfile.collin.tel}`}>
-            <span className="quote-cta__specialist-info">
-              <strong>{businessProfile.collin.name}</strong>
-              <small>{businessProfile.collin.role}</small>
-            </span>
-            <span className="quote-cta__phone">
-              <Phone size={18} weight="bold" aria-hidden="true" />
-              {businessProfile.collin.phone}
-            </span>
-          </a>
-          <a className="quote-cta__specialist" href={`tel:${businessProfile.caleb.tel}`}>
-            <span className="quote-cta__specialist-info">
-              <strong>{businessProfile.caleb.name}</strong>
-              <small>{businessProfile.caleb.role}</small>
-            </span>
-            <span className="quote-cta__phone">
-              <Phone size={18} weight="bold" aria-hidden="true" />
-              {businessProfile.caleb.phone}
-            </span>
-          </a>
-        </div>
+        <SpecialistRail variant="phones" className="quote-cta__specialists" />
       </div>
     </section>
   );

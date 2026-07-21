@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
+import { galleryItems } from "../app/gallery-data";
 import { PortfolioPage } from "../pages/PortfolioPage";
 
 describe("PortfolioPage", () => {
@@ -11,7 +12,12 @@ describe("PortfolioPage", () => {
       </MemoryRouter>
     );
 
+    expect(document.querySelector(".campaign-hero--portfolio")).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "The work." })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Finish" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Process" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Protection" })).toBeVisible();
+    expect(screen.getAllByRole("button", { name: /Open .* detail/ })).toHaveLength(6);
     const firstImage = screen.getByRole("button", { name: "Open coupe detail" });
     fireEvent.click(firstImage);
 
@@ -35,5 +41,12 @@ describe("PortfolioPage", () => {
 
     fireEvent.keyDown(document, { key: "Escape" });
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  });
+
+  it("keeps full-resolution lightbox sources and display-sized page sources", () => {
+    for (const item of galleryItems) {
+      expect(item.displaySrc).toMatch(/^\/images\/display\//);
+      expect(item.src).toMatch(/^\/images\/(?!display\/)/);
+    }
   });
 });

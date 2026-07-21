@@ -4,7 +4,7 @@
   z-index: 30;
   height: var(--header-height);
   border-bottom: 1px solid rgb(255 255 255 / 0.09);
-  background: rgb(7 7 7 / 0.9);
+  background: var(--canvas);
 }
 
 .site-header__inner {
@@ -16,7 +16,7 @@
 }
 
 .site-wordmark {
-  width: clamp(150px, 19vw, 232px);
+  width: clamp(144px, 17vw, 214px);
 }
 
 .site-wordmark img {
@@ -32,6 +32,150 @@
   min-height: 42px;
   padding-inline: 18px;
   font-size: 0.72rem;
+}
+
+.campaign-hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  min-height: 720px;
+  overflow: hidden;
+  padding-top: var(--header-height);
+  background: var(--canvas);
+}
+
+.campaign-hero__image,
+.campaign-hero__image-action,
+.campaign-hero__scrim {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.campaign-hero__image-action {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.campaign-hero__image {
+  object-fit: cover;
+}
+
+.campaign-hero__scrim {
+  z-index: 1;
+  background: rgb(4 4 4 / 0.56);
+  pointer-events: none;
+}
+
+.campaign-hero__content {
+  position: relative;
+  z-index: 2;
+  align-self: end;
+  padding-block: 88px 64px;
+}
+
+.campaign-hero h1 {
+  max-width: 9ch;
+  margin-bottom: 28px;
+  font-size: clamp(3.8rem, 12vw, 8.8rem);
+  font-weight: 780;
+  letter-spacing: -0.075em;
+  line-height: 0.86;
+}
+
+.campaign-hero p {
+  max-width: 610px;
+  margin-bottom: 0;
+  color: var(--text-soft);
+  font-size: clamp(1rem, 1.8vw, 1.3rem);
+  line-height: 1.55;
+}
+
+.campaign-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px 26px;
+  margin-top: 34px;
+}
+
+.campaign-hero--home {
+  min-height: 100dvh;
+}
+
+.campaign-hero--home .campaign-hero__image {
+  object-position: 62% center;
+}
+
+.campaign-hero--portfolio {
+  min-height: min(1040px, 100dvh);
+}
+
+.campaign-hero--portfolio .campaign-hero__scrim {
+  background: rgb(4 4 4 / 0.35);
+}
+
+.campaign-hero--portfolio .campaign-hero__image {
+  object-position: center 58%;
+}
+
+.campaign-hero--contact {
+  min-height: min(760px, 86dvh);
+}
+
+.campaign-hero--contact .campaign-hero__content {
+  align-self: center;
+}
+
+.specialist-rail {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.specialist-rail__item {
+  display: flex;
+  min-height: 78px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-bottom: 1px solid var(--line);
+  color: var(--text);
+  transition: color 180ms ease;
+}
+
+.specialist-rail__item:last-child {
+  border-bottom: 0;
+}
+
+.specialist-rail__item:hover {
+  color: var(--signal-text);
+}
+
+.specialist-rail__identity {
+  display: grid;
+  gap: 4px;
+}
+
+.specialist-rail__identity strong {
+  font-size: 1.02rem;
+  font-weight: 680;
+}
+
+.specialist-rail__identity small {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.specialist-rail__destination,
+.specialist-rail__item--single {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.88rem;
+  font-weight: 630;
 }
 
 .menu-toggle {
@@ -84,11 +228,11 @@
 .site-footer__grid {
   display: grid;
   gap: 42px;
-  padding-block: 72px 56px;
+  padding-block: 80px 60px;
 }
 
 .site-footer__brand img {
-  width: min(280px, 100%);
+  width: min(250px, 100%);
   margin-bottom: 22px;
 }
 
@@ -195,5 +339,68 @@
   .site-footer__legal {
     flex-direction: row;
     justify-content: space-between;
+  }
+
+  .specialist-rail--full {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1.15fr)) repeat(2, minmax(0, 0.85fr));
+  }
+
+  .specialist-rail--full .specialist-rail__item {
+    min-width: 0;
+    border-right: 1px solid var(--line);
+    border-bottom: 0;
+    padding-inline: 24px;
+  }
+
+  .specialist-rail--full .specialist-rail__item:first-child {
+    padding-left: 0;
+  }
+
+  .specialist-rail--full .specialist-rail__item:last-child {
+    border-right: 0;
+    padding-right: 0;
+  }
+
+  .specialist-rail--phones {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .specialist-rail--phones .specialist-rail__item {
+    border-right: 1px solid var(--line);
+    border-bottom: 0;
+    padding-inline: 24px;
+  }
+
+  .specialist-rail--phones .specialist-rail__item:first-child {
+    padding-left: 0;
+  }
+
+  .specialist-rail--phones .specialist-rail__item:last-child {
+    border-right: 0;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 540px) {
+  .campaign-hero {
+    min-height: 100dvh;
+  }
+
+  .campaign-hero__content {
+    padding-block: 72px 44px;
+  }
+
+  .campaign-hero h1 {
+    font-size: clamp(3.4rem, 16vw, 4.4rem);
+  }
+
+  .campaign-hero--home .campaign-hero__image {
+    object-position: 69% center;
+  }
+
+  .specialist-rail__item {
+    min-height: 74px;
   }
 }

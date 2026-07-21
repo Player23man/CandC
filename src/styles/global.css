@@ -9,11 +9,14 @@
   --canvas: #070707;
   --surface: #101010;
   --surface-strong: #151515;
+  --print: #ede9e1;
+  --print-text: #101010;
   --line: #292929;
   --text: #f2f0eb;
   --text-soft: #aaa7a1;
   --text-muted: #85817c;
   --signal: #dc2b3e;
+  --signal-text: #e13b4d;
   --signal-hover: #bb2334;
   --header-height: 72px;
   --shell: min(100% - 40px, 1400px);

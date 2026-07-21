@@ -31,6 +31,8 @@ describe("ServiceBoard", () => {
     expect(screen.getByRole("tab", { name: /Exterior Detail/ })).toHaveAttribute("aria-selected", "true");
     expect(within(serviceIndex).getByText("01")).toBeVisible();
     expect(within(serviceIndex).getByText("04")).toBeVisible();
+    expect(within(serviceIndex).getByText("05")).toBeVisible();
+    expect(within(serviceIndex).getAllByRole("tab")).toHaveLength(5);
     expect(activePanel).toHaveTextContent("Hand wax +$50");
     expect(activePanel.querySelectorAll(".service-board__spec-row").length).toBeGreaterThan(0);
     expect(activePanel.querySelector("ul")).toBeNull();
@@ -38,6 +40,9 @@ describe("ServiceBoard", () => {
 
     await user.click(screen.getByRole("tab", { name: /Ceramic Coating/ }));
     expect(screen.getByRole("tabpanel")).toHaveTextContent("Large SUV, van, or truck $1,100");
+
+    await user.click(screen.getByRole("tab", { name: /Marine Detailing/ }));
+    expect(screen.getByRole("tabpanel")).toHaveTextContent("Wash, heavy oxidation removal, and wax $80-$100/ft");
   });
 
   it("moves between services with arrow keys", async () => {
@@ -48,8 +53,8 @@ describe("ServiceBoard", () => {
     exterior.focus();
 
     await user.keyboard("{ArrowRight}");
-    expect(screen.getByRole("tab", { name: /Interior Restoration/ })).toHaveFocus();
-    expect(screen.getByRole("tabpanel")).toHaveTextContent("Full interior restoration $225+");
+    expect(screen.getByRole("tab", { name: /Interior Detailing/ })).toHaveFocus();
+    expect(screen.getByRole("tabpanel")).toHaveTextContent("From $160");
   });
 
   it("supports Home and End in the desktop service index", async () => {
@@ -60,7 +65,7 @@ describe("ServiceBoard", () => {
     exterior.focus();
 
     await user.keyboard("{End}");
-    expect(screen.getByRole("tab", { name: /Ceramic Coating/ })).toHaveFocus();
+    expect(screen.getByRole("tab", { name: /Marine Detailing/ })).toHaveFocus();
     await user.keyboard("{Home}");
     expect(exterior).toHaveFocus();
   });
@@ -76,9 +81,12 @@ describe("ServiceBoard", () => {
     const mobile = within(mobileControls as HTMLElement);
     const exteriorTrigger = mobile.getByRole("button", { name: /Exterior Detail/ });
     const ceramicTrigger = mobile.getByRole("button", { name: /Ceramic Coating/ });
+    const marineTrigger = mobile.getByRole("button", { name: /Marine Detailing/ });
+    expect(mobile.getAllByRole("button")).toHaveLength(5);
     expect(exteriorTrigger).toHaveAttribute("aria-expanded", "true");
     expect(within(exteriorTrigger).getByText("01")).toBeVisible();
     expect(within(ceramicTrigger).getByText("04")).toBeVisible();
+    expect(within(marineTrigger).getByText("05")).toBeVisible();
 
     await user.click(mobile.getByRole("button", { name: /Paint Correction/ }));
     expect(mobile.getByRole("button", { name: /Paint Correction/ })).toHaveAttribute("aria-expanded", "true");

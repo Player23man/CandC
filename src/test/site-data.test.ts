@@ -9,6 +9,19 @@ describe("C&C business data", () => {
   });
 
   it("preserves service pricing and testimonial wording", () => {
+    const interior = services.find((service) => service.id === "interior");
+    const marine = services.find((service) => service.id === "marine");
+
+    expect(interior?.name).toBe("Interior Detailing");
+    expect(interior?.price).toBe("From $160");
+    expect(interior?.priceNotes).toBeUndefined();
+    expect(marine?.price).toBe("From $10/ft");
+    expect(marine?.priceNotes).toEqual(expect.arrayContaining([
+      "Wash and wax $30/ft",
+      "Wash, heavy oxidation removal, and wax $80-$100/ft",
+      "Ceramic coating +$20/ft",
+      "Deep interior cleaning $30-$40/ft"
+    ]));
     expect(services.find((service) => service.id === "ceramic")?.price).toBe("From $900");
     expect(services.find((service) => service.id === "correction")?.price).toBe("From $600");
     expect(testimonial).toContain("2022 Tucson");

@@ -8,8 +8,8 @@ const serviceImages: Record<Service["id"], { src: string; alt: string }> = {
     alt: "Vehicle receiving a careful hand wash"
   },
   interior: {
-    src: "/images/gallery-suv.jpg",
-    alt: "Black vehicle being cleaned by hand"
+    src: "/images/interior-detailing.jpg",
+    alt: "Clean light-colored vehicle seats and floor area"
   },
   correction: {
     src: "/images/detail-process.jpg",
@@ -18,6 +18,10 @@ const serviceImages: Record<Service["id"], { src: string; alt: string }> = {
   ceramic: {
     src: "/images/ceramic-display.jpg",
     alt: "Ceramic coating display on a detailed red vehicle"
+  },
+  marine: {
+    src: "/images/marine-detailing.jpg",
+    alt: "Detailed blue and white boat on its trailer"
   }
 };
 

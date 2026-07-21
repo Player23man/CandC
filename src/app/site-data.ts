@@ -6,7 +6,7 @@ export type Specialist = {
 };
 
 export type Service = {
-  id: "exterior" | "interior" | "correction" | "ceramic";
+  id: "exterior" | "interior" | "correction" | "ceramic" | "marine";
   name: string;
   price: string;
   description: string;
@@ -39,11 +39,10 @@ export const services: Service[] = [
   },
   {
     id: "interior",
-    name: "Interior Restoration",
-    price: "From $180",
-    description: "Maintenance cleaning or a deeper restoration based on vehicle condition.",
-    details: ["Comprehensive vacuum", "Floor mat cleaning", "Surface cleaning", "Spot stain removal"],
-    priceNotes: ["Basic interior cleaning $180", "Full interior restoration $225+ based on condition"]
+    name: "Interior Detailing",
+    price: "From $160",
+    description: "One complete interior package focused on a thorough, condition-based clean.",
+    details: ["Comprehensive vacuum", "Floor mat cleaning", "Surface cleaning", "Spot stain removal"]
   },
   {
     id: "correction",
@@ -60,6 +59,22 @@ export const services: Service[] = [
     description: "Long-term protection for easier maintenance and a deeper finish.",
     details: ["Full exterior detail", "Paint decontamination", "Two-step paint correction", "Paint and rim coating"],
     priceNotes: ["Sedan or small SUV $900", "Large SUV, van, or truck $1,100", "Window coating +$100", "Trim coating +$100"]
+  },
+  {
+    id: "marine",
+    name: "Marine Detailing",
+    price: "From $10/ft",
+    description: "Exterior and interior boat detailing with oxidation-removal and ceramic-protection options.",
+    details: ["Exterior wash", "Interior cleaning", "Oxidation-removal options", "Ceramic-protection option"],
+    priceNotes: [
+      "Wash $10/ft",
+      "Wash and wax $30/ft",
+      "Wash, light oxidation removal, and wax $60/ft",
+      "Wash, heavy oxidation removal, and wax $80-$100/ft",
+      "Ceramic coating +$20/ft",
+      "Basic interior cleaning $10/ft",
+      "Deep interior cleaning $30-$40/ft"
+    ]
   }
 ];
 

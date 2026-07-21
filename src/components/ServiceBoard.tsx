@@ -2,7 +2,7 @@ import { CaretDown } from "@phosphor-icons/react";
 import { useRef, useState, type KeyboardEvent } from "react";
 import { services, type Service } from "../app/site-data";
 
-export const serviceImages: Record<Service["id"], { src: string; alt: string }> = {
+const serviceImages: Record<Service["id"], { src: string; alt: string }> = {
   exterior: {
     src: "/images/detail-exterior.jpg",
     alt: "Vehicle receiving a careful hand wash"

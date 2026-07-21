@@ -1,7 +1,6 @@
 import { EnvelopeSimple, FacebookLogo, Phone } from "@phosphor-icons/react";
 import { businessProfile, serviceNotes } from "../app/site-data";
 import { ContactForm } from "../components/ContactForm";
-import { Reveal } from "../components/Reveal";
 
 const specialists = [businessProfile.collin, businessProfile.caleb];
 
@@ -9,10 +8,10 @@ export function ContactPage() {
   return (
     <main id="main-content" className="contact-page">
       <header className="contact-intro shell">
-        <Reveal>
+        <div>
           <h1>Let’s talk about your vehicle.</h1>
           <p>C&C works by appointment at the shop and through mobile service around Channahon.</p>
-        </Reveal>
+        </div>
       </header>
 
       <section className="contact-layout shell" aria-label="Quote and contact information">

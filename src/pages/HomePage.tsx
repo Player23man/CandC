@@ -16,6 +16,11 @@ function ServiceRow({ service }: { service: (typeof services)[number] }) {
       <div>
         <h3>{service.name}</h3>
         <p>{service.description}</p>
+        {service.priceNotes && (
+          <ul className="service-row__notes">
+            {service.priceNotes.map((note) => <li key={note}>{note}</li>)}
+          </ul>
+        )}
       </div>
       <strong>{service.price}</strong>
     </article>
@@ -34,7 +39,7 @@ export function HomePage() {
         />
         <div className="home-hero__scrim" aria-hidden="true" />
         <div className="shell home-hero__content">
-          <Reveal>
+          <div>
             <h1 id="home-hero-title">Finished with intent.</h1>
             <p>Shop and mobile detailing, paint correction, and ceramic coating in Channahon.</p>
             <div className="home-hero__actions">
@@ -44,7 +49,7 @@ export function HomePage() {
                 <ArrowRight size={19} weight="bold" aria-hidden="true" />
               </Link>
             </div>
-          </Reveal>
+          </div>
         </div>
       </section>
 
@@ -68,7 +73,7 @@ export function HomePage() {
           </div>
 
           <Link className="text-link" to="/contact">
-            See full package details
+            Ask about your vehicle
             <ArrowRight size={18} weight="bold" aria-hidden="true" />
           </Link>
         </div>

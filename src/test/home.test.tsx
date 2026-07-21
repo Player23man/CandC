@@ -16,6 +16,8 @@ describe("HomePage", () => {
     expect(screen.getByText("Exterior Detail")).toBeVisible();
     expect(screen.getByText("From $600")).toBeVisible();
     expect(screen.getByText("From $900")).toBeVisible();
+    expect(screen.getByText("Large SUV, van, or truck $1,100")).toBeVisible();
+    expect(screen.getByText("Wet sanding is an additional charge")).toBeVisible();
   });
 
   it("renders the exact source testimonial and quote action", () => {

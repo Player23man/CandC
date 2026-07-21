@@ -10,10 +10,10 @@ export function PortfolioPage() {
   return (
     <main id="main-content" className="portfolio-page">
       <header className="page-intro shell">
-        <Reveal>
+        <div>
           <h1>The work.</h1>
           <p>A closer look at the finish, process, and attention that goes into a properly detailed vehicle.</p>
-        </Reveal>
+        </div>
       </header>
 
       <section className="portfolio-gallery shell" aria-label="Vehicle detailing portfolio">
@@ -21,7 +21,6 @@ export function PortfolioPage() {
           <Reveal className={`gallery-item ${item.className ?? ""}`} delay={(index % 3) * 0.05} key={item.src}>
             <button type="button" aria-label={item.openLabel} onClick={() => setActiveIndex(index)}>
               <img src={item.src} alt={item.alt} loading={index < 2 ? "eager" : "lazy"} />
-              <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
             </button>
           </Reveal>
         ))}

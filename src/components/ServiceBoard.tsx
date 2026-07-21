@@ -41,14 +41,14 @@ function ServiceDetails({ service, mobile = false }: { service: Service; mobile?
 
       <div className="service-board__lists">
         <div>
-          <h4>Included in service</h4>
+          <p className="service-board__list-title">Included in service</p>
           <ul>
             {service.details.map((detail) => <li key={detail}>{detail}</li>)}
           </ul>
         </div>
         {service.priceNotes && (
           <div>
-            <h4>Pricing &amp; options</h4>
+            <p className="service-board__list-title">Pricing &amp; options</p>
             <ul>
               {service.priceNotes.map((note) => <li key={note}>{note}</li>)}
             </ul>

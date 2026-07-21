@@ -48,6 +48,12 @@ Object.defineProperty(window, "matchMedia", {
   value: defaultMatchMedia
 });
 
+Object.defineProperty(window, "scrollTo", {
+  configurable: true,
+  writable: true,
+  value: () => undefined
+});
+
 afterEach(() => {
   document.body.innerHTML = "";
   window.matchMedia = defaultMatchMedia;

@@ -1,6 +1,7 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { AppRoutes } from "./App";
 
 describe("site routes", () => {
@@ -30,5 +31,24 @@ describe("site routes", () => {
       "content",
       expect.stringContaining("vehicle detailing")
     );
+  });
+
+  it("returns to the top when navigating to another page", async () => {
+    const scrollTo = vi.spyOn(window, "scrollTo").mockImplementation(() => undefined);
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter initialEntries={["/"]}>
+        <AppRoutes />
+      </MemoryRouter>
+    );
+
+    const primaryNavigation = screen.getByRole("navigation", { name: "Primary navigation" });
+    await user.click(within(primaryNavigation).getByRole("link", { name: "Portfolio" }));
+
+    await waitFor(() => {
+      expect(scrollTo).toHaveBeenCalledWith({ top: 0, left: 0, behavior: "auto" });
+    });
+    scrollTo.mockRestore();
   });
 });

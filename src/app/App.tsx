@@ -1,4 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { SiteFooter } from "../components/SiteFooter";
+import { SiteHeader } from "../components/SiteHeader";
 
 const PlaceholderPage = ({ heading }: { heading: string }) => (
   <main>
@@ -8,11 +10,15 @@ const PlaceholderPage = ({ heading }: { heading: string }) => (
 
 export function AppRoutes() {
   return (
-    <Routes>
-      <Route path="/" element={<PlaceholderPage heading="Finished with intent." />} />
-      <Route path="/portfolio" element={<PlaceholderPage heading="The work." />} />
-      <Route path="/contact" element={<PlaceholderPage heading="Let’s talk about your vehicle." />} />
-    </Routes>
+    <>
+      <SiteHeader />
+      <Routes>
+        <Route path="/" element={<PlaceholderPage heading="Finished with intent." />} />
+        <Route path="/portfolio" element={<PlaceholderPage heading="The work." />} />
+        <Route path="/contact" element={<PlaceholderPage heading="Let’s talk about your vehicle." />} />
+      </Routes>
+      <SiteFooter />
+    </>
   );
 }
 

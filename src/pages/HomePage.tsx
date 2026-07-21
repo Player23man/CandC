@@ -1,31 +1,8 @@
 import { ArrowRight } from "@phosphor-icons/react";
 import { Link } from "react-router-dom";
-import { services, testimonial, workIncludes } from "../app/site-data";
 import { QuoteCta } from "../components/QuoteCta";
 import { Reveal } from "../components/Reveal";
-
-const inclusionGroups = [
-  { title: "Exterior", items: workIncludes.exterior },
-  { title: "Interior", items: workIncludes.interior },
-  { title: "Protection", items: workIncludes.protection }
-];
-
-function ServiceRow({ service }: { service: (typeof services)[number] }) {
-  return (
-    <article className="service-row">
-      <div>
-        <h3>{service.name}</h3>
-        <p>{service.description}</p>
-        {service.priceNotes && (
-          <ul className="service-row__notes">
-            {service.priceNotes.map((note) => <li key={note}>{note}</li>)}
-          </ul>
-        )}
-      </div>
-      <strong>{service.price}</strong>
-    </article>
-  );
-}
+import { ServiceBoard } from "../components/ServiceBoard";
 
 export function HomePage() {
   return (
@@ -53,51 +30,19 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="home-services" aria-labelledby="services-title">
+      <section className="service-board-section" aria-labelledby="service-board-title">
         <div className="shell">
-          <Reveal className="section-heading">
-            <h2 id="services-title">Built around what your vehicle needs.</h2>
-            <p>Clear starting prices. Packages scale with vehicle size and condition.</p>
+          <Reveal className="service-board-section__heading">
+            <h2 id="service-board-title">Choose the work your vehicle needs.</h2>
+            <p>Compare starting prices, included work, and package options.</p>
           </Reveal>
 
-          <div className="services-index">
-            <div className="services-index__group">
-              {services.slice(0, 2).map((service) => <ServiceRow key={service.id} service={service} />)}
-            </div>
-            <Reveal className="services-index__media">
-              <img src="/images/ceramic-display.jpg" alt="Ceramic coating display on a detailed red vehicle" />
-            </Reveal>
-            <div className="services-index__group">
-              {services.slice(2).map((service) => <ServiceRow key={service.id} service={service} />)}
-            </div>
-          </div>
+          <ServiceBoard />
 
-          <Link className="text-link" to="/contact">
+          <Link className="text-link service-board-section__link" to="/contact">
             Ask about your vehicle
             <ArrowRight size={18} weight="bold" aria-hidden="true" />
           </Link>
-        </div>
-      </section>
-
-      <section className="work-includes" aria-labelledby="work-includes-title">
-        <div className="work-includes__media">
-          <img src="/images/detail-exterior.jpg" alt="Vehicle receiving a careful hand wash" loading="lazy" />
-        </div>
-        <div className="work-includes__content">
-          <Reveal>
-            <h2 id="work-includes-title">What the work includes.</h2>
-            <p>Every package is grounded in the same careful exterior, interior, and protection work.</p>
-          </Reveal>
-          <div className="inclusion-groups">
-            {inclusionGroups.map((group) => (
-              <Reveal className="inclusion-group" key={group.title}>
-                <h3>{group.title}</h3>
-                <ul>
-                  {group.items.map((item) => <li key={item}>{item}</li>)}
-                </ul>
-              </Reveal>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -127,7 +72,13 @@ export function HomePage() {
       <section className="testimonial" aria-label="Customer testimonial">
         <div className="shell testimonial__inner">
           <Reveal>
-            <blockquote>{testimonial}</blockquote>
+            <blockquote>
+              I felt like I drove away in a brand-new car. His work is meticulous; every crevice of car cleaned to perfection!
+            </blockquote>
+            <p className="testimonial__source">
+              <strong>Verified customer review</strong>
+              <span>2022 Tucson owner</span>
+            </p>
           </Reveal>
         </div>
       </section>

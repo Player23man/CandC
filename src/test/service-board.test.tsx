@@ -25,9 +25,15 @@ describe("ServiceBoard", () => {
     setDesktopViewport(true);
     const user = userEvent.setup();
     const { container } = render(<ServiceBoard />);
+    const serviceIndex = screen.getByRole("tablist", { name: "Detailing services" });
+    const activePanel = screen.getByRole("tabpanel");
 
     expect(screen.getByRole("tab", { name: /Exterior Detail/ })).toHaveAttribute("aria-selected", "true");
-    expect(screen.getByRole("tabpanel")).toHaveTextContent("Hand wax +$50");
+    expect(within(serviceIndex).getByText("01")).toBeVisible();
+    expect(within(serviceIndex).getByText("04")).toBeVisible();
+    expect(activePanel).toHaveTextContent("Hand wax +$50");
+    expect(activePanel.querySelectorAll(".service-board__spec-row").length).toBeGreaterThan(0);
+    expect(activePanel.querySelector("ul")).toBeNull();
     expect(container.querySelectorAll(".service-board img")).toHaveLength(1);
 
     await user.click(screen.getByRole("tab", { name: /Ceramic Coating/ }));
@@ -68,10 +74,16 @@ describe("ServiceBoard", () => {
     expect(mobileControls).not.toBeNull();
     expect(container.querySelectorAll(".service-board img")).toHaveLength(1);
     const mobile = within(mobileControls as HTMLElement);
-    expect(mobile.getByRole("button", { name: /Exterior Detail/ })).toHaveAttribute("aria-expanded", "true");
+    const exteriorTrigger = mobile.getByRole("button", { name: /Exterior Detail/ });
+    const ceramicTrigger = mobile.getByRole("button", { name: /Ceramic Coating/ });
+    expect(exteriorTrigger).toHaveAttribute("aria-expanded", "true");
+    expect(within(exteriorTrigger).getByText("01")).toBeVisible();
+    expect(within(ceramicTrigger).getByText("04")).toBeVisible();
 
     await user.click(mobile.getByRole("button", { name: /Paint Correction/ }));
     expect(mobile.getByRole("button", { name: /Paint Correction/ })).toHaveAttribute("aria-expanded", "true");
-    expect(mobile.getByText("Wet sanding is an additional charge")).toBeVisible();
+    const correctionRegion = mobile.getByRole("region", { name: "Paint Correction details" });
+    expect(within(correctionRegion).getByText("Wet sanding is an additional charge")).toBeVisible();
+    expect(correctionRegion.querySelectorAll(".service-board__spec-row").length).toBeGreaterThan(0);
   });
 });

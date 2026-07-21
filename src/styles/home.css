@@ -368,52 +368,89 @@
 }
 
 .quote-cta {
-  background: var(--signal);
-  color: #fff;
+  border-top: 3px solid var(--signal);
+  background: var(--canvas);
+  color: var(--text);
 }
 
 .quote-cta__inner {
-  padding-block: 82px;
+  display: grid;
+  gap: 42px;
+  padding-block: 76px;
 }
 
 .quote-cta h2 {
-  max-width: 900px;
-  margin-bottom: 34px;
-  font-size: clamp(2.6rem, 6vw, 5.1rem);
-  font-weight: 780;
-  letter-spacing: -0.06em;
-  line-height: 0.96;
+  max-width: 720px;
+  margin-bottom: 18px;
+  font-size: clamp(2.35rem, 5vw, 4.25rem);
+  font-weight: 740;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
 }
 
-.quote-cta__actions {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 18px;
+.quote-cta__heading p {
+  max-width: 460px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 
-.quote-cta__actions > a:not(.button) {
+.quote-cta__action {
   display: inline-flex;
-  min-height: 44px;
   align-items: center;
-  gap: 9px;
-  font-weight: 690;
 }
 
 .quote-cta__primary {
   gap: 12px;
-  background: var(--canvas);
-  color: #fff;
+  min-width: 168px;
 }
 
-.quote-cta__primary:hover {
-  background: #181818;
+.quote-cta__specialists {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
-.quote-cta p {
-  margin: 28px 0 0;
-  font-size: 0.92rem;
-  font-weight: 570;
+.quote-cta__specialist {
+  display: flex;
+  min-height: 76px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-block: 16px;
+  transition: color 180ms ease;
+}
+
+.quote-cta__specialist + .quote-cta__specialist {
+  border-top: 1px solid var(--line);
+}
+
+.quote-cta__specialist:hover {
+  color: var(--signal);
+}
+
+.quote-cta__specialist-info {
+  display: grid;
+  gap: 5px;
+}
+
+.quote-cta__specialist-info strong {
+  font-size: 1.05rem;
+  font-weight: 690;
+}
+
+.quote-cta__specialist-info small {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.quote-cta__phone {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.9rem;
+  font-weight: 650;
 }
 
 @media (min-width: 768px) {
@@ -570,13 +607,18 @@
   }
 
   .quote-cta__inner {
-    padding-block: 112px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 48px;
+    padding-block: 96px;
   }
 
-  .quote-cta__actions {
-    flex-direction: row;
-    align-items: center;
-    gap: 28px;
+  .quote-cta__specialists {
+    grid-column: 1 / -1;
+  }
+
+  .quote-cta h2 {
+    margin-bottom: 20px;
   }
 }
 
@@ -587,6 +629,15 @@
 
   .service-board__lists {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .quote-cta__inner {
+    grid-template-columns: minmax(0, 1.1fr) auto minmax(360px, 0.9fr);
+    gap: clamp(40px, 6vw, 92px);
+  }
+
+  .quote-cta__specialists {
+    grid-column: auto;
   }
 }
 

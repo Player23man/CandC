@@ -25,12 +25,6 @@ export const businessProfile = {
     role: "Exterior specialist",
     phone: "815-922-1593",
     tel: "8159221593"
-  } satisfies Specialist,
-  caleb: {
-    name: "Caleb",
-    role: "Interior specialist",
-    phone: "815-409-5501",
-    tel: "8154095501"
   } satisfies Specialist
 };
 

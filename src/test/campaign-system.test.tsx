@@ -27,7 +27,7 @@ describe("campaign system", () => {
     render(<SpecialistRail />);
 
     expect(screen.getByRole("link", { name: /Collin.*815-922-1593/ })).toHaveAttribute("href", "tel:8159221593");
-    expect(screen.getByRole("link", { name: /Caleb.*815-409-5501/ })).toHaveAttribute("href", "tel:8154095501");
+    expect(screen.queryByText("Caleb")).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "candcdetailing25@gmail.com" })).toHaveAttribute("href", "mailto:candcdetailing25@gmail.com");
     expect(screen.getByRole("link", { name: "Facebook" })).toHaveAttribute("target", "_blank");
   });

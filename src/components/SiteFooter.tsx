@@ -22,10 +22,6 @@ export function SiteFooter() {
             <Phone size={18} aria-hidden="true" />
             Collin {businessProfile.collin.phone}
           </a>
-          <a href={`tel:${businessProfile.caleb.tel}`}>
-            <Phone size={18} aria-hidden="true" />
-            Caleb {businessProfile.caleb.phone}
-          </a>
           <a href={`mailto:${businessProfile.email}`}>
             <EnvelopeSimple size={18} aria-hidden="true" />
             {businessProfile.email}

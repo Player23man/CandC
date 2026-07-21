@@ -15,7 +15,7 @@ it("renders the concierge campaign, contact rail, and request guidance", () => {
   expect(document.querySelector(".campaign-hero--contact")).toBeInTheDocument();
   expect(screen.getByRole("heading", { name: "Let’s talk about your vehicle." })).toBeVisible();
   expect(screen.getByRole("link", { name: /Collin.*815-922-1593/ })).toHaveAttribute("href", "tel:8159221593");
-  expect(screen.getByRole("link", { name: /Caleb.*815-409-5501/ })).toHaveAttribute("href", "tel:8154095501");
+  expect(screen.queryByText("Caleb")).not.toBeInTheDocument();
   expect(screen.getByRole("heading", { name: "Before you request a quote" })).toBeVisible();
   expect(screen.getByRole("heading", { name: "Request a quote" })).toBeVisible();
 });
@@ -25,10 +25,14 @@ describe("ContactForm", () => {
     const user = userEvent.setup();
     render(<ContactForm />);
 
+    expect(document.querySelector('label[for="quote-phone"] span')).toHaveTextContent("*");
+    expect(document.querySelector('label[for="quote-email"] span')).toHaveTextContent("*");
+
     await user.click(screen.getByRole("button", { name: "Get a quote" }));
 
     expect(screen.getByText("Enter your name.")).toBeVisible();
-    expect(screen.getByText("Enter a phone number or email address.")).toBeVisible();
+    expect(screen.getByText("Enter your phone number.")).toBeVisible();
+    expect(screen.getByText("Enter your email address.")).toBeVisible();
     expect(screen.getByText("Tell us about your vehicle.")).toBeVisible();
     expect(screen.getByRole("status")).toHaveTextContent("");
   });
@@ -37,7 +41,7 @@ describe("ContactForm", () => {
     const href = buildQuoteMailto({
       name: "Alec",
       phone: "815-555-0100",
-      email: "",
+      email: "alec@example.com",
       vehicle: "2022 Ford F-150",
       service: "Ceramic Coating",
       preference: "Mobile",

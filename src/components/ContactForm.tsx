@@ -12,7 +12,7 @@ export type QuoteFormValues = {
   timing: string;
 };
 
-type QuoteFormErrors = Partial<Record<"name" | "contact" | "vehicle" | "service" | "details", string>>;
+type QuoteFormErrors = Partial<Record<"name" | "phone" | "email" | "vehicle" | "service" | "details", string>>;
 
 const initialValues: QuoteFormValues = {
   name: "",
@@ -47,7 +47,8 @@ function validateQuote(values: QuoteFormValues): QuoteFormErrors {
   const errors: QuoteFormErrors = {};
 
   if (!values.name.trim()) errors.name = "Enter your name.";
-  if (!values.phone.trim() && !values.email.trim()) errors.contact = "Enter a phone number or email address.";
+  if (!values.phone.trim()) errors.phone = "Enter your phone number.";
+  if (!values.email.trim()) errors.email = "Enter your email address.";
   if (!values.vehicle.trim()) errors.vehicle = "Tell us about your vehicle.";
   if (!values.service) errors.service = "Choose a service.";
   if (!values.details.trim()) errors.details = "Describe the vehicle’s condition or what you need help with.";
@@ -105,34 +106,35 @@ export function ContactForm() {
 
       <div className="form-row">
         <div className="form-field">
-          <label htmlFor="quote-phone">Phone</label>
+          <label htmlFor="quote-phone">Phone <span aria-hidden="true">*</span></label>
           <input
             id="quote-phone"
             name="phone"
             type="tel"
             autoComplete="tel"
             value={values.phone}
-            aria-invalid={Boolean(errors.contact)}
-            aria-describedby={errors.contact ? "quote-contact-error" : undefined}
+            aria-invalid={Boolean(errors.phone)}
+            aria-describedby={errors.phone ? "quote-phone-error" : undefined}
             onChange={(event) => updateValue("phone", event.target.value)}
           />
+          {errors.phone && <p className="field-error" id="quote-phone-error">{errors.phone}</p>}
         </div>
 
         <div className="form-field">
-          <label htmlFor="quote-email">Email</label>
+          <label htmlFor="quote-email">Email <span aria-hidden="true">*</span></label>
           <input
             id="quote-email"
             name="email"
             type="email"
             autoComplete="email"
             value={values.email}
-            aria-invalid={Boolean(errors.contact)}
-            aria-describedby={errors.contact ? "quote-contact-error" : undefined}
+            aria-invalid={Boolean(errors.email)}
+            aria-describedby={errors.email ? "quote-email-error" : undefined}
             onChange={(event) => updateValue("email", event.target.value)}
           />
+          {errors.email && <p className="field-error" id="quote-email-error">{errors.email}</p>}
         </div>
       </div>
-      {errors.contact && <p className="field-error field-error--row" id="quote-contact-error">{errors.contact}</p>}
 
       <div className="form-field">
         <label htmlFor="quote-vehicle">Vehicle year, make, and model <span aria-hidden="true">*</span></label>

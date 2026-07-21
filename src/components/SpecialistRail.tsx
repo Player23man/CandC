@@ -6,7 +6,7 @@ export type SpecialistRailProps = {
   className?: string;
 };
 
-const specialists = [businessProfile.collin, businessProfile.caleb];
+const specialists = [businessProfile.collin];
 
 export function SpecialistRail({ variant = "full", className = "" }: SpecialistRailProps) {
   return (

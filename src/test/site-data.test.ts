@@ -4,7 +4,7 @@ import { businessProfile, services, testimonial } from "../app/site-data";
 describe("C&C business data", () => {
   it("preserves current contact details", () => {
     expect(businessProfile.collin.phone).toBe("815-922-1593");
-    expect(businessProfile.caleb.phone).toBe("815-409-5501");
+    expect(businessProfile).not.toHaveProperty("caleb");
     expect(businessProfile.email).toBe("candcdetailing25@gmail.com");
   });
 

@@ -1,0 +1,258 @@
+.contact-page {
+  padding-top: var(--header-height);
+}
+
+.contact-intro {
+  padding-block: clamp(78px, 9vw, 136px) clamp(60px, 7vw, 98px);
+}
+
+.contact-intro h1 {
+  max-width: 9.5ch;
+  margin-bottom: 30px;
+  font-size: clamp(3.7rem, 10.5vw, 9.5rem);
+  font-weight: 820;
+  letter-spacing: -0.07em;
+  line-height: 0.88;
+}
+
+.contact-intro p {
+  max-width: 660px;
+  margin-bottom: 0;
+  color: var(--text-soft);
+  font-size: clamp(1.05rem, 1.8vw, 1.42rem);
+  line-height: 1.55;
+}
+
+.contact-layout {
+  display: grid;
+  gap: 70px;
+  padding-bottom: clamp(90px, 12vw, 170px);
+}
+
+.specialist-list {
+  border-top: 1px solid var(--line);
+}
+
+.specialist-row {
+  display: grid;
+  gap: 18px;
+  padding-block: 24px;
+  border-bottom: 1px solid var(--line);
+  transition: color 160ms ease;
+}
+
+.specialist-row:hover {
+  color: var(--signal);
+}
+
+.specialist-row > span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.specialist-row > span:first-child {
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.specialist-row strong {
+  font-size: 1.28rem;
+}
+
+.specialist-row small {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.contact-links {
+  display: grid;
+  gap: 16px;
+  margin-top: 34px;
+}
+
+.contact-links a {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-soft);
+  overflow-wrap: anywhere;
+}
+
+.contact-links a:hover {
+  color: var(--text);
+}
+
+.appointment-notes {
+  margin-top: 58px;
+}
+
+.appointment-notes h2,
+.contact-form-wrap > h2 {
+  margin-bottom: 26px;
+  font-size: clamp(1.7rem, 3vw, 2.7rem);
+  letter-spacing: -0.04em;
+}
+
+.appointment-notes ul {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding-left: 20px;
+  color: var(--text-soft);
+  line-height: 1.55;
+}
+
+.contact-form-wrap {
+  min-width: 0;
+}
+
+.quote-form {
+  display: grid;
+  gap: 28px;
+}
+
+.form-row {
+  display: grid;
+  gap: 28px;
+}
+
+.form-field {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.form-field label {
+  font-size: 0.78rem;
+  font-weight: 720;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.form-field label span {
+  color: var(--signal);
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  min-height: 54px;
+  border: 1px solid #3a3a3a;
+  border-radius: 0;
+  padding: 14px 15px;
+  background: #0c0c0c;
+  color: var(--text);
+  outline: none;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+
+.form-field textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  border-color: var(--text);
+  background: #111;
+}
+
+.form-field input[aria-invalid="true"],
+.form-field select[aria-invalid="true"],
+.form-field textarea[aria-invalid="true"] {
+  border-color: var(--signal);
+}
+
+.field-error {
+  margin: 0;
+  color: #ff6a78;
+  font-size: 0.82rem;
+}
+
+.field-error--row {
+  margin-top: -18px;
+}
+
+.form-field--file {
+  padding-block: 22px;
+  border-block: 1px solid var(--line);
+}
+
+.form-field--file input {
+  min-height: auto;
+  border: 0;
+  padding: 8px 0;
+  background: transparent;
+}
+
+.form-field--file p,
+.quote-form__submit p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.quote-form__submit {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.quote-form__status {
+  min-height: 1.5em;
+  color: var(--text-soft);
+  line-height: 1.5;
+}
+
+.email-fallback {
+  padding: 20px;
+  border-left: 3px solid var(--signal);
+  background: #111;
+}
+
+.email-fallback p {
+  margin-bottom: 12px;
+  line-height: 1.55;
+}
+
+.email-fallback a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.email-fallback button {
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  padding: 0 0 3px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+
+@media (min-width: 680px) {
+  .form-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 980px) {
+  .contact-layout {
+    grid-template-columns: minmax(280px, 0.72fr) minmax(500px, 1.28fr);
+    gap: clamp(70px, 9vw, 150px);
+  }
+
+  .specialist-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+  }
+}

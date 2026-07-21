@@ -5,6 +5,7 @@ import "./styles/global.css";
 import "./styles/layout.css";
 import "./styles/home.css";
 import "./styles/portfolio.css";
+import "./styles/contact.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

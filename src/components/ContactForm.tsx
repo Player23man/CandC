@@ -12,7 +12,7 @@ export type QuoteFormValues = {
   timing: string;
 };
 
-type QuoteFormErrors = Partial<Record<"name" | "phone" | "email" | "vehicle" | "service" | "details", string>>;
+type QuoteFormErrors = Partial<Record<"name" | "phone" | "email" | "vehicle" | "service" | "details" | "photos", string>>;
 
 const initialValues: QuoteFormValues = {
   name: "",
@@ -43,7 +43,7 @@ export function buildQuoteMailto(values: QuoteFormValues) {
   return `mailto:${encodeURIComponent(businessProfile.email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
-function validateQuote(values: QuoteFormValues): QuoteFormErrors {
+function validateQuote(values: QuoteFormValues, photoCount: number): QuoteFormErrors {
   const errors: QuoteFormErrors = {};
 
   if (!values.name.trim()) errors.name = "Enter your name.";
@@ -52,6 +52,9 @@ function validateQuote(values: QuoteFormValues): QuoteFormErrors {
   if (!values.vehicle.trim()) errors.vehicle = "Tell us about your vehicle.";
   if (!values.service) errors.service = "Choose a service.";
   if (!values.details.trim()) errors.details = "Describe the vehicle’s condition or what you need help with.";
+  if (values.service === "Interior Detailing" && photoCount === 0) {
+    errors.photos = "Add at least one interior photo.";
+  }
 
   return errors;
 }
@@ -61,6 +64,8 @@ export function ContactForm() {
   const [errors, setErrors] = useState<QuoteFormErrors>({});
   const [preparedMailto, setPreparedMailto] = useState("");
   const [status, setStatus] = useState("");
+  const [photoCount, setPhotoCount] = useState(0);
+  const requiresInteriorPhotos = values.service === "Interior Detailing";
 
   const updateValue = (field: keyof QuoteFormValues, value: string) => {
     setValues((current) => ({ ...current, [field]: value }));
@@ -68,7 +73,7 @@ export function ContactForm() {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const nextErrors = validateQuote(values);
+    const nextErrors = validateQuote(values, photoCount);
     setErrors(nextErrors);
     setPreparedMailto("");
     setStatus("");
@@ -158,7 +163,13 @@ export function ContactForm() {
             value={values.service}
             aria-invalid={Boolean(errors.service)}
             aria-describedby={errors.service ? "quote-service-error" : undefined}
-            onChange={(event) => updateValue("service", event.target.value)}
+            onChange={(event) => {
+              const nextService = event.target.value;
+              updateValue("service", nextService);
+              if (nextService !== "Interior Detailing") {
+                setErrors(({ photos: _photos, ...current }) => current);
+              }
+            }}
           >
             <option value="">Select a service</option>
             {services.map((service) => <option value={service.name} key={service.id}>{service.name}</option>)}
@@ -207,8 +218,28 @@ export function ContactForm() {
       </div>
 
       <div className="form-field form-field--file">
-        <label htmlFor="quote-photos">Optional vehicle photos</label>
-        <input id="quote-photos" name="photos" type="file" accept="image/*" multiple />
+        <label htmlFor="quote-photos">
+          {requiresInteriorPhotos ? "Vehicle photos" : "Optional vehicle photos"}
+          {requiresInteriorPhotos && <> <span aria-hidden="true">*</span></>}
+        </label>
+        <input
+          id="quote-photos"
+          name="photos"
+          type="file"
+          accept="image/*"
+          multiple
+          aria-required={requiresInteriorPhotos}
+          aria-invalid={Boolean(errors.photos)}
+          aria-describedby={errors.photos ? "quote-photos-error" : undefined}
+          onChange={(event) => {
+            const nextPhotoCount = event.target.files?.length ?? 0;
+            setPhotoCount(nextPhotoCount);
+            if (nextPhotoCount > 0) {
+              setErrors(({ photos: _photos, ...current }) => current);
+            }
+          }}
+        />
+        {errors.photos && <p className="field-error" id="quote-photos-error">{errors.photos}</p>}
         <p>Attachments cannot be transferred automatically. Add selected photos to the prepared email before sending.</p>
       </div>
 

@@ -38,6 +38,41 @@ describe("ContactForm", () => {
     expect(screen.getByRole("status")).toHaveTextContent("");
   });
 
+  it("requires a vehicle photo when Interior Detailing is selected", async () => {
+    const user = userEvent.setup();
+    render(<ContactForm />);
+
+    expect(screen.getByText("Optional vehicle photos")).toBeVisible();
+
+    await user.selectOptions(screen.getByLabelText(/Service interest/), "Interior Detailing");
+
+    const photos = screen.getByLabelText(/Vehicle photos/);
+    expect(document.querySelector('label[for="quote-photos"] span')).toHaveTextContent("*");
+    expect(photos).toHaveAttribute("aria-required", "true");
+
+    await user.click(screen.getByRole("button", { name: "Get a quote" }));
+
+    expect(screen.getByText("Add at least one interior photo.")).toBeVisible();
+    expect(photos).toHaveAttribute("aria-invalid", "true");
+  });
+
+  it("clears the photo requirement after upload or a different service selection", async () => {
+    const user = userEvent.setup();
+    render(<ContactForm />);
+
+    await user.selectOptions(screen.getByLabelText(/Service interest/), "Interior Detailing");
+    const photos = screen.getByLabelText(/Vehicle photos/);
+    await user.click(screen.getByRole("button", { name: "Get a quote" }));
+    expect(screen.getByText("Add at least one interior photo.")).toBeVisible();
+
+    await user.upload(photos, new File(["image"], "interior.jpg", { type: "image/jpeg" }));
+    expect(screen.queryByText("Add at least one interior photo.")).not.toBeInTheDocument();
+
+    await user.selectOptions(screen.getByLabelText(/Service interest/), "Exterior Detail");
+    expect(screen.getByText("Optional vehicle photos")).toBeVisible();
+    expect(photos).toHaveAttribute("aria-required", "false");
+  });
+
   it("builds a recoverable email handoff from submitted details", () => {
     const href = buildQuoteMailto({
       name: "Alec",

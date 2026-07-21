@@ -29,6 +29,7 @@ describe("HomePage", () => {
     expect(screen.queryByRole("heading", { name: "Built around what your vehicle needs." })).not.toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "What the work includes." })).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "The finish speaks for itself." })).toBeVisible();
+    expect(document.querySelector(".service-board-section--print")).toBeInTheDocument();
     expect(document.querySelector(".testimonial--print")).toBeInTheDocument();
     expect(screen.getByText("Verified customer review")).toBeVisible();
     expect(screen.getByText("2022 Tucson owner")).toBeVisible();

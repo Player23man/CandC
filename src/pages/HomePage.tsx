@@ -30,7 +30,7 @@ export function HomePage() {
         }
       />
 
-      <section className="service-board-section" aria-labelledby="service-board-title">
+      <section className="service-board-section service-board-section--print" aria-labelledby="service-board-title">
         <div className="shell">
           <Reveal className="service-board-section__heading">
             <h2 id="service-board-title">Choose the work your vehicle needs.</h2>

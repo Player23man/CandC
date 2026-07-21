@@ -29,6 +29,60 @@
   border-bottom: 1px solid var(--line);
 }
 
+.service-board-section--print {
+  border-color: #bdb7ad;
+  background: var(--print);
+  color: var(--print-text);
+}
+
+.service-board-section--print .service-board,
+.service-board-section--print .service-board__mobile-item,
+.service-board-section--print .service-board__desktop,
+.service-board-section--print .service-board__tabs,
+.service-board-section--print .service-board__tab {
+  border-color: #bdb7ad;
+}
+
+.service-board-section--print .service-board-section__heading p,
+.service-board-section--print .service-board__description,
+.service-board-section--print .service-board__selected,
+.service-board-section--print .service-board__lists ul {
+  color: #625d56;
+}
+
+.service-board-section--print .service-board__mobile-trigger,
+.service-board-section--print .service-board__overview h3,
+.service-board-section--print .service-board__list-title,
+.service-board-section--print .text-link {
+  color: var(--print-text);
+}
+
+.service-board-section--print .service-board__mobile-trigger svg {
+  color: #6f6961;
+}
+
+.service-board-section--print .service-board__mobile-trigger[aria-expanded="true"] svg {
+  color: var(--signal);
+}
+
+.service-board-section--print .service-board__tab {
+  color: #625d56;
+}
+
+.service-board-section--print .service-board__tab:hover,
+.service-board-section--print .service-board__tab[data-active="true"] {
+  background: rgb(16 16 16 / 0.045);
+  color: var(--print-text);
+}
+
+.service-board-section--print .service-board__panel {
+  background: transparent;
+}
+
+.service-board-section--print .service-board__image-wrap {
+  background: #d5cfc5;
+}
+
 .service-board-section__heading {
   max-width: 830px;
   margin-bottom: 48px;

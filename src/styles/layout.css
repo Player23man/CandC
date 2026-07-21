@@ -103,11 +103,37 @@
 }
 
 .campaign-hero--home {
-  min-height: 100dvh;
+  min-height: min(940px, 96dvh);
 }
 
 .campaign-hero--home .campaign-hero__image {
-  object-position: 62% center;
+  object-position: 64% center;
+}
+
+.campaign-hero--home .campaign-hero__scrim {
+  background: rgb(4 4 4 / 0.18);
+}
+
+.campaign-hero--home .campaign-hero__content {
+  padding-block: 0 clamp(54px, 6vw, 86px);
+}
+
+.campaign-hero--home h1 {
+  max-width: 9ch;
+  margin-bottom: 20px;
+  font-size: clamp(3.25rem, 6.2vw, 5.9rem);
+  letter-spacing: -0.065em;
+  line-height: 0.9;
+}
+
+.campaign-hero--home p {
+  max-width: 540px;
+  color: #ddd9d2;
+  font-size: clamp(1rem, 1.35vw, 1.16rem);
+}
+
+.campaign-hero--home .campaign-hero__actions {
+  margin-top: 28px;
 }
 
 .campaign-hero--portfolio {
@@ -397,7 +423,26 @@
   }
 
   .campaign-hero--home .campaign-hero__image {
-    object-position: 69% center;
+    object-position: 68% center;
+  }
+
+  .campaign-hero--home {
+    min-height: min(760px, 90dvh);
+  }
+
+  .campaign-hero--home .campaign-hero__content {
+    padding-block: 0 42px;
+  }
+
+  .campaign-hero--home h1 {
+    max-width: 7ch;
+    margin-bottom: 18px;
+    font-size: clamp(3.05rem, 14vw, 3.8rem);
+  }
+
+  .campaign-hero--home p {
+    max-width: 32ch;
+    color: #e4e0d9;
   }
 
   .specialist-rail__item {

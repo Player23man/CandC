@@ -45,11 +45,24 @@ export const galleryItems: GalleryItem[] = [
     displaySrc: "/images/display/detail-process.jpg",
     alt: "White performance car under studio lighting",
     openLabel: "Open studio finish detail"
+  },
+  {
+    src: "/images/interior-before.jpg",
+    displaySrc: "/images/display/interior-before.jpg",
+    alt: "Vehicle floor area before interior detailing",
+    openLabel: "Open interior before detail"
+  },
+  {
+    src: "/images/interior-detailing.jpg",
+    displaySrc: "/images/display/interior-detailing.jpg",
+    alt: "Clean light-colored vehicle seats and floor area after detailing",
+    openLabel: "Open interior after detail"
   }
 ];
 
 export const portfolioChapters = [
   { id: "finish", title: "Finish", itemIndexes: [3, 5], layout: "pair" },
   { id: "process", title: "Process", itemIndexes: [1, 4], layout: "documentary" },
+  { id: "interior", title: "Interior", itemIndexes: [6, 7], layout: "documentary" },
   { id: "protection", title: "Protection", itemIndexes: [2], layout: "feature" }
 ] as const;

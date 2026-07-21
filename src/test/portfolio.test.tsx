@@ -16,8 +16,9 @@ describe("PortfolioPage", () => {
     expect(screen.getByRole("heading", { name: "The work." })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Finish" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Process" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Interior" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Protection" })).toBeVisible();
-    expect(screen.getAllByRole("button", { name: /Open .* detail/ })).toHaveLength(6);
+    expect(screen.getAllByRole("button", { name: /Open .* detail/ })).toHaveLength(8);
     const firstImage = screen.getByRole("button", { name: "Open coupe detail" });
     fireEvent.click(firstImage);
 
@@ -48,5 +49,18 @@ describe("PortfolioPage", () => {
       expect(item.displaySrc).toMatch(/^\/images\/display\//);
       expect(item.src).toMatch(/^\/images\/(?!display\/)/);
     }
+
+    expect(galleryItems).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          src: "/images/interior-before.jpg",
+          displaySrc: "/images/display/interior-before.jpg"
+        }),
+        expect.objectContaining({
+          src: "/images/interior-detailing.jpg",
+          displaySrc: "/images/display/interior-detailing.jpg"
+        })
+      ])
+    );
   });
 });

@@ -152,14 +152,16 @@
 }
 
 @media (min-width: 900px) {
+  .gallery-chapter {
+    padding-block: clamp(96px, 8vw, 128px);
+  }
+
   .gallery-chapter__inner {
-    grid-template-columns: minmax(180px, 0.33fr) minmax(0, 1.67fr);
-    align-items: start;
+    display: block;
   }
 
   .gallery-chapter__heading {
-    position: sticky;
-    top: calc(var(--header-height) + 36px);
+    margin-bottom: clamp(36px, 5vw, 72px);
   }
 
   .gallery-chapter--pair .gallery-chapter__images {
@@ -195,7 +197,6 @@
 
   .gallery-chapter--feature .gallery-chapter__heading {
     position: static;
-    margin-bottom: clamp(42px, 7vw, 96px);
   }
 
   .gallery-chapter--feature .gallery-chapter__item img {

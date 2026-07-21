@@ -15,7 +15,6 @@ export function SpecialistRail({ variant = "full", className = "" }: SpecialistR
         <a className="specialist-rail__item" href={`tel:${specialist.tel}`} key={specialist.name}>
           <span className="specialist-rail__identity">
             <strong>{specialist.name}</strong>
-            <small>{specialist.role}</small>
           </span>
           <span className="specialist-rail__destination">
             <Phone size={18} weight="bold" aria-hidden="true" />

@@ -15,6 +15,7 @@ it("renders the concierge campaign, contact rail, and request guidance", () => {
   expect(document.querySelector(".campaign-hero--contact")).toBeInTheDocument();
   expect(screen.getByRole("heading", { name: "Let’s talk about your vehicle." })).toBeVisible();
   expect(screen.getByRole("link", { name: /Collin.*815-922-1593/ })).toHaveAttribute("href", "tel:8159221593");
+  expect(screen.queryByText("Exterior specialist")).not.toBeInTheDocument();
   expect(screen.queryByText("Caleb")).not.toBeInTheDocument();
   expect(screen.getByRole("heading", { name: "Before you request a quote" })).toBeVisible();
   expect(screen.getByRole("heading", { name: "Request a quote" })).toBeVisible();

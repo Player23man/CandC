@@ -1,111 +1,45 @@
-.contact-page {
-  padding-top: var(--header-height);
+.contact-rail-band {
+  padding-block: clamp(56px, 7vw, 92px);
+  border-top: 3px solid var(--signal);
+  background: var(--canvas);
 }
 
-.contact-intro {
-  padding-block: clamp(78px, 9vw, 136px) clamp(60px, 7vw, 98px);
+.quote-chapter {
+  padding-block: clamp(88px, 12vw, 170px);
+  background: var(--print);
+  color: var(--print-text);
 }
 
-.contact-intro h1 {
-  max-width: 9.5ch;
-  margin-bottom: 30px;
-  font-size: clamp(3.7rem, 10.5vw, 9.5rem);
-  font-weight: 820;
-  letter-spacing: -0.07em;
-  line-height: 0.88;
-}
-
-.contact-intro p {
-  max-width: 660px;
-  margin-bottom: 0;
-  color: var(--text-soft);
-  font-size: clamp(1.05rem, 1.8vw, 1.42rem);
-  line-height: 1.55;
-}
-
-.contact-layout {
+.quote-chapter__inner {
   display: grid;
-  gap: 70px;
-  padding-bottom: clamp(90px, 12vw, 170px);
-}
-
-.specialist-list {
-  border-top: 1px solid var(--line);
-}
-
-.specialist-row {
-  display: grid;
-  gap: 18px;
-  padding-block: 24px;
-  border-bottom: 1px solid var(--line);
-  transition: color 160ms ease;
-}
-
-.specialist-row:hover {
-  color: var(--signal);
-}
-
-.specialist-row > span {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.specialist-row > span:first-child {
-  align-items: flex-start;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.specialist-row strong {
-  font-size: 1.28rem;
-}
-
-.specialist-row small {
-  color: var(--text-muted);
-  font-size: 0.78rem;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-}
-
-.contact-links {
-  display: grid;
-  gap: 16px;
-  margin-top: 34px;
-}
-
-.contact-links a {
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  gap: 12px;
-  color: var(--text-soft);
-  overflow-wrap: anywhere;
-}
-
-.contact-links a:hover {
-  color: var(--text);
-}
-
-.appointment-notes {
-  margin-top: 58px;
+  gap: clamp(68px, 10vw, 140px);
 }
 
 .appointment-notes h2,
 .contact-form-wrap > h2 {
-  margin-bottom: 26px;
+  margin-bottom: 34px;
   font-size: clamp(1.7rem, 3vw, 2.7rem);
+  font-weight: 710;
   letter-spacing: -0.04em;
 }
 
 .appointment-notes ul {
   display: grid;
-  gap: 12px;
+  gap: 0;
   margin: 0;
-  padding-left: 20px;
-  color: var(--text-soft);
+  padding: 0;
+  color: #514d47;
   line-height: 1.55;
+  list-style: none;
+}
+
+.appointment-notes li {
+  padding-block: 16px;
+  border-top: 1px solid #bdb7ad;
+}
+
+.appointment-notes li:last-child {
+  border-bottom: 1px solid #bdb7ad;
 }
 
 .contact-form-wrap {
@@ -136,7 +70,7 @@
 }
 
 .form-field label span {
-  color: var(--signal);
+  color: #b71227;
 }
 
 .form-field input,
@@ -144,11 +78,12 @@
 .form-field textarea {
   width: 100%;
   min-height: 54px;
-  border: 1px solid #3a3a3a;
+  border: 0;
+  border-bottom: 1px solid #8e8981;
   border-radius: 0;
-  padding: 14px 15px;
-  background: #0c0c0c;
-  color: var(--text);
+  padding: 14px 0;
+  background: transparent;
+  color: var(--print-text);
   outline: none;
   transition: border-color 160ms ease, background-color 160ms ease;
 }
@@ -161,19 +96,19 @@
 .form-field input:focus,
 .form-field select:focus,
 .form-field textarea:focus {
-  border-color: var(--text);
-  background: #111;
+  border-color: var(--print-text);
+  background: rgb(255 255 255 / 0.18);
 }
 
 .form-field input[aria-invalid="true"],
 .form-field select[aria-invalid="true"],
 .form-field textarea[aria-invalid="true"] {
-  border-color: var(--signal);
+  border-color: #a90018;
 }
 
 .field-error {
   margin: 0;
-  color: #ff6a78;
+  color: #9e0016;
   font-size: 0.82rem;
 }
 
@@ -183,7 +118,7 @@
 
 .form-field--file {
   padding-block: 22px;
-  border-block: 1px solid var(--line);
+  border-block: 1px solid #bdb7ad;
 }
 
 .form-field--file input {
@@ -196,7 +131,7 @@
 .form-field--file p,
 .quote-form__submit p {
   margin: 0;
-  color: var(--text-muted);
+  color: #68635c;
   font-size: 0.82rem;
   line-height: 1.5;
 }
@@ -210,14 +145,14 @@
 
 .quote-form__status {
   min-height: 1.5em;
-  color: var(--text-soft);
+  color: #514d47;
   line-height: 1.5;
 }
 
 .email-fallback {
   padding: 20px;
   border-left: 3px solid var(--signal);
-  background: #111;
+  background: rgb(0 0 0 / 0.055);
 }
 
 .email-fallback p {
@@ -235,7 +170,7 @@
   border-bottom: 1px solid currentColor;
   padding: 0 0 3px;
   background: transparent;
-  color: var(--text);
+  color: var(--print-text);
   cursor: pointer;
 }
 
@@ -246,13 +181,31 @@
 }
 
 @media (min-width: 980px) {
-  .contact-layout {
-    grid-template-columns: minmax(280px, 0.72fr) minmax(500px, 1.28fr);
-    gap: clamp(70px, 9vw, 150px);
+  .contact-rail-band .specialist-rail {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .specialist-row {
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
+  .contact-rail-band .specialist-rail__item:nth-child(odd) {
+    padding-right: 28px;
+    border-right: 1px solid var(--line);
+  }
+
+  .contact-rail-band .specialist-rail__item:nth-child(even) {
+    padding-left: 28px;
+  }
+
+  .contact-rail-band .specialist-rail__item:nth-last-child(-n + 2) {
+    border-bottom: 0;
+  }
+
+  .quote-chapter__inner {
+    grid-template-columns: minmax(260px, 0.58fr) minmax(520px, 1.42fr);
+  }
+
+  .appointment-notes {
+    position: sticky;
+    top: calc(var(--header-height) + 40px);
+    align-self: start;
   }
 }

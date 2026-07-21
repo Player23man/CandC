@@ -21,7 +21,9 @@ const serviceImages: Record<Service["id"], { src: string; alt: string }> = {
   }
 };
 
-function ServiceDetails({ service, mobile = false }: { service: Service; mobile?: boolean }) {
+const serviceNumber = (index: number) => String(index + 1).padStart(2, "0");
+
+function ServiceDetails({ service }: { service: Service }) {
   const image = serviceImages[service.id];
 
   return (
@@ -32,26 +34,29 @@ function ServiceDetails({ service, mobile = false }: { service: Service; mobile?
           <h3>{service.name}</h3>
           <p className="service-board__description">{service.description}</p>
         </div>
-        {!mobile && <span className="service-board__selected">Selected service</span>}
       </div>
 
       <div className="service-board__image-wrap">
         <img src={image.src} alt={image.alt} loading="lazy" decoding="async" />
       </div>
 
-      <div className="service-board__lists">
-        <div>
-          <p className="service-board__list-title">Included in service</p>
-          <ul>
-            {service.details.map((detail) => <li key={detail}>{detail}</li>)}
-          </ul>
+      <div className="service-board__specs">
+        <div className="service-board__spec-group">
+          <p className="service-board__spec-title">Included in service</p>
+          <div className="service-board__spec-list">
+            {service.details.map((detail) => (
+              <p className="service-board__spec-row" key={detail}>{detail}</p>
+            ))}
+          </div>
         </div>
         {service.priceNotes && (
-          <div>
-            <p className="service-board__list-title">Pricing &amp; options</p>
-            <ul>
-              {service.priceNotes.map((note) => <li key={note}>{note}</li>)}
-            </ul>
+          <div className="service-board__spec-group">
+            <p className="service-board__spec-title">Pricing &amp; options</p>
+            <div className="service-board__spec-list">
+              {service.priceNotes.map((note) => (
+                <p className="service-board__spec-row" key={note}>{note}</p>
+              ))}
+            </div>
           </div>
         )}
       </div>
@@ -123,7 +128,8 @@ export function ServiceBoard() {
                   onClick={() => setActiveId(service.id)}
                   onKeyDown={(event) => handleTabKeyDown(event, index)}
                 >
-                  <span>{service.name}</span>
+                  <span className="service-board__tab-number" aria-hidden="true">{serviceNumber(index)}</span>
+                  <span className="service-board__tab-name">{service.name}</span>
                   <small>{service.price}</small>
                 </button>
               );
@@ -142,7 +148,7 @@ export function ServiceBoard() {
         </div>
       ) : (
         <div className="service-board__mobile">
-          {services.map((service) => {
+          {services.map((service, index) => {
             const isActive = service.id === activeId;
             return (
               <div className="service-board__mobile-item" key={service.id}>
@@ -153,7 +159,8 @@ export function ServiceBoard() {
                   aria-controls={`service-mobile-panel-${service.id}`}
                   onClick={() => setActiveId(service.id)}
                 >
-                  <span>
+                  <span className="service-board__mobile-number" aria-hidden="true">{serviceNumber(index)}</span>
+                  <span className="service-board__mobile-label">
                     <strong>{service.name}</strong>
                     <small>{service.price}</small>
                   </span>
@@ -166,7 +173,7 @@ export function ServiceBoard() {
                     role="region"
                     aria-label={`${service.name} details`}
                   >
-                    <ServiceDetails service={service} mobile />
+                    <ServiceDetails service={service} />
                   </div>
                 )}
               </div>

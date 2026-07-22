@@ -5,6 +5,23 @@ import { CampaignHero } from "../components/CampaignHero";
 import { SpecialistRail } from "../components/SpecialistRail";
 
 describe("campaign system", () => {
+  it("uses a desktop-only lower-left vignette for home hero copy", () => {
+    const { container } = render(
+      <MemoryRouter>
+        <CampaignHero
+          layout="home"
+          title="Finished with intent."
+          description="Shop and mobile detailing in Channahon."
+          image={{ src: "/images/gallery-suv.jpg", alt: "Black Porsche Taycan receiving a careful hand wash" }}
+        />
+      </MemoryRouter>
+    );
+
+    expect(container.querySelector(".campaign-hero__scrim")).toHaveClass(
+      "campaign-hero__scrim--home-vignette"
+    );
+  });
+
   it("renders an image campaign with a labelled title and action slot", () => {
     render(
       <MemoryRouter>

@@ -114,6 +114,12 @@
   background: rgb(4 4 4 / 0.18);
 }
 
+@media (min-width: 768px) {
+  .campaign-hero--home .campaign-hero__scrim--home-vignette {
+    background: radial-gradient(ellipse 72% 74% at 0% 100%, rgb(4 4 4 / 0.58) 0%, rgb(4 4 4 / 0.32) 42%, rgb(4 4 4 / 0.08) 70%, transparent 100%);
+  }
+}
+
 .campaign-hero--home .campaign-hero__content {
   padding-block: 0 clamp(54px, 6vw, 86px);
 }

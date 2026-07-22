@@ -13,10 +13,10 @@ export function HomePage() {
         title="Finished with intent."
         description="Shop and mobile detailing, paint correction, and ceramic coating in Channahon."
         image={{
-          src: "/images/detail-process.jpg",
-          srcSet: "/images/detail-process-960.jpg 960w, /images/detail-process.jpg 1600w",
+          src: "/images/gallery-suv.jpg",
+          srcSet: "/images/display/gallery-suv.jpg 1280w, /images/gallery-suv.jpg 1600w",
           sizes: "100vw",
-          alt: "White performance car under studio lighting",
+          alt: "Black Porsche Taycan receiving a careful hand wash",
           fetchPriority: "high"
         }}
         actions={

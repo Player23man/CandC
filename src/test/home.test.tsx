@@ -4,6 +4,25 @@ import { describe, expect, it } from "vitest";
 import { HomePage } from "../pages/HomePage";
 
 describe("HomePage", () => {
+  it("uses the Porsche Taycan hand-wash photograph for the hero", () => {
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>
+    );
+
+    const heroImage = screen.getByRole("img", {
+      name: "Black Porsche Taycan receiving a careful hand wash"
+    });
+
+    expect(heroImage).toHaveAttribute("src", "/images/gallery-suv.jpg");
+    expect(heroImage).toHaveAttribute(
+      "srcset",
+      "/images/display/gallery-suv.jpg 1280w, /images/gallery-suv.jpg 1600w"
+    );
+    expect(heroImage).toHaveAttribute("fetchpriority", "high");
+  });
+
   it("renders the approved hero and service prices", () => {
     render(
       <MemoryRouter>

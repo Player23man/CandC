@@ -44,7 +44,12 @@ export function CampaignHero({ layout, title, description, image, imageAction, a
       ) : (
         imageElement
       )}
-      {image && <div className="campaign-hero__scrim" aria-hidden="true" />}
+      {image && (
+        <div
+          className={`campaign-hero__scrim${layout === "home" ? " campaign-hero__scrim--home-vignette" : ""}`}
+          aria-hidden="true"
+        />
+      )}
       <div className="shell campaign-hero__content">
         <h1 id={titleId}>{title}</h1>
         <p>{description}</p>

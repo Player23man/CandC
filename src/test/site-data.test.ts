@@ -14,6 +14,13 @@ describe("C&C business data", () => {
 
     expect(interior?.name).toBe("Interior Detailing");
     expect(interior?.price).toBe("From $160");
+    expect(interior?.details).toEqual([
+      "Comprehensive interior vacuum",
+      "Floor mat cleaning",
+      "Detailed surface wipe down",
+      "Compressed air crevice cleaning",
+      "Spot stain removal"
+    ]);
     expect(interior?.priceNotes).toBeUndefined();
     expect(marine?.price).toBe("From $10/ft");
     expect(marine?.priceNotes).toEqual(expect.arrayContaining([

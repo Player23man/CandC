@@ -42,7 +42,13 @@ export const services: Service[] = [
     name: "Interior Detailing",
     price: "From $160",
     description: "One complete interior package focused on a thorough, condition-based clean.",
-    details: ["Comprehensive vacuum", "Floor mat cleaning", "Surface cleaning", "Spot stain removal"]
+    details: [
+      "Comprehensive interior vacuum",
+      "Floor mat cleaning",
+      "Detailed surface wipe down",
+      "Compressed air crevice cleaning",
+      "Spot stain removal"
+    ]
   },
   {
     id: "correction",

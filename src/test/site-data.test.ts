@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { businessProfile, services, testimonial } from "../app/site-data";
+import { businessProfile, services, testimonial, workIncludes } from "../app/site-data";
 
 describe("C&C business data", () => {
   it("preserves current contact details", () => {
@@ -15,13 +15,21 @@ describe("C&C business data", () => {
     expect(interior?.name).toBe("Interior Detailing");
     expect(interior?.price).toBe("From $160");
     expect(interior?.details).toEqual([
-      "Comprehensive interior vacuum",
+      "Full interior blow-out and debris extraction",
+      "Comprehensive vacuum of carpets, seats, and trunk",
+      "Deep shampoo of carpets, cloth seats, and carpet mats",
+      "Deep leather cleaning and conditioning",
+      "Steam cleaning and sanitization of surfaces",
+      "Full interior surface scrub",
+      "Headliner spot cleaning",
       "Floor mat cleaning",
-      "Detailed surface wipe down",
-      "Compressed air crevice cleaning",
-      "Spot stain removal"
+      "Odor neutralization"
     ]);
     expect(interior?.priceNotes).toBeUndefined();
+    const exterior = services.find((service) => service.id === "exterior");
+    expect(exterior?.details).toContain("Hand wash and hydro sealer");
+    expect(JSON.stringify({ services, workIncludes }).toLowerCase()).not.toContain("spray wax");
+    expect(workIncludes.protection).toContain("Hydro sealer");
     expect(marine?.price).toBe("From $10/ft");
     expect(marine?.priceNotes).toEqual(expect.arrayContaining([
       "Wash and wax $30/ft",

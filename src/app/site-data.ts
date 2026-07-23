@@ -34,7 +34,7 @@ export const services: Service[] = [
     name: "Exterior Detail",
     price: "From $150",
     description: "A thorough hand wash and refresh with short-term paint protection.",
-    details: ["Hand wash and spray wax", "Wheels and wheel wells", "Windows and trim", "Door jambs"],
+    details: ["Hand wash and hydro sealer", "Wheels and wheel wells", "Windows and trim", "Door jambs"],
     priceNotes: ["Hand wax +$50", "Engine bay +$60", "Headlight restoration +$30 each"]
   },
   {
@@ -43,11 +43,15 @@ export const services: Service[] = [
     price: "From $160",
     description: "One complete interior package focused on a thorough, condition-based clean.",
     details: [
-      "Comprehensive interior vacuum",
+      "Full interior blow-out and debris extraction",
+      "Comprehensive vacuum of carpets, seats, and trunk",
+      "Deep shampoo of carpets, cloth seats, and carpet mats",
+      "Deep leather cleaning and conditioning",
+      "Steam cleaning and sanitization of surfaces",
+      "Full interior surface scrub",
+      "Headliner spot cleaning",
       "Floor mat cleaning",
-      "Detailed surface wipe down",
-      "Compressed air crevice cleaning",
-      "Spot stain removal"
+      "Odor neutralization"
     ]
   },
   {
@@ -95,7 +99,7 @@ export const serviceNotes = [
 export const workIncludes = {
   exterior: ["Hand wash", "Wheels and wheel wells", "Paint decontamination", "Machine polish"],
   interior: ["Steam cleaning", "Carpet and seat shampooing", "Surface cleaning", "Odor neutralization"],
-  protection: ["Spray wax", "Wax sealant", "Ceramic coating", "Rim coating"]
+  protection: ["Hydro sealer", "Wax sealant", "Ceramic coating", "Rim coating"]
 };
 
 export const testimonial =

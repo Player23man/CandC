@@ -57,12 +57,47 @@ export const galleryItems: GalleryItem[] = [
     displaySrc: "/images/display/interior-detailing.jpg",
     alt: "Clean light-colored vehicle seats and floor area after detailing",
     openLabel: "Open interior after detail"
+  },
+  {
+    src: "/images/cc-interior-floor-before.jpg",
+    displaySrc: "/images/display/cc-interior-floor-before.jpg",
+    alt: "Front footwell carpet with visible debris before interior cleaning",
+    openLabel: "Open interior carpet before detail",
+    className: "gallery-item--wide"
+  },
+  {
+    src: "/images/cc-interior-floor-mat-clean.jpg",
+    displaySrc: "/images/display/cc-interior-floor-mat-clean.jpg",
+    alt: "Clean driver footwell with a fitted rubber floor mat",
+    openLabel: "Open clean floor mat detail",
+    className: "gallery-item--tall"
+  },
+  {
+    src: "/images/cc-interior-console-clean.jpg",
+    displaySrc: "/images/display/cc-interior-console-clean.jpg",
+    alt: "Clean center console and cupholders between light-colored seats",
+    openLabel: "Open clean center console detail",
+    className: "gallery-item--tall"
+  },
+  {
+    src: "/images/cc-interior-cargo-clean.jpg",
+    displaySrc: "/images/display/cc-interior-cargo-clean.jpg",
+    alt: "Freshly vacuumed vehicle cargo area with visible carpet lines",
+    openLabel: "Open clean cargo area detail",
+    className: "gallery-item--wide"
+  },
+  {
+    src: "/images/cc-jeep-finish.jpg",
+    displaySrc: "/images/display/cc-jeep-finish.jpg",
+    alt: "Clean Jeep rear wheel, tire, and painted body panel",
+    openLabel: "Open Jeep exterior detail",
+    className: "gallery-item--tall"
   }
 ];
 
 export const portfolioChapters = [
-  { id: "finish", title: "Finish", itemIndexes: [3, 5], layout: "pair" },
-  { id: "process", title: "Process", itemIndexes: [1, 4], layout: "documentary" },
-  { id: "interior", title: "Interior", itemIndexes: [6, 7], layout: "documentary" },
+  { id: "finish", title: "Finish", itemIndexes: [3, 5, 12], layout: "pair" },
+  { id: "process", title: "Process", itemIndexes: [1, 4, 8], layout: "documentary" },
+  { id: "interior", title: "Interior", itemIndexes: [6, 7, 9, 10, 11], layout: "documentary" },
   { id: "protection", title: "Protection", itemIndexes: [2], layout: "feature" }
 ] as const;

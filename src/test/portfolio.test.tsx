@@ -18,7 +18,7 @@ describe("PortfolioPage", () => {
     expect(screen.getByRole("heading", { name: "Process" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Interior" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Protection" })).toBeVisible();
-    expect(screen.getAllByRole("button", { name: /Open .* detail/ })).toHaveLength(8);
+    expect(screen.getAllByRole("button", { name: /Open .* detail/ })).toHaveLength(13);
     const firstImage = screen.getByRole("button", { name: "Open coupe detail" });
     fireEvent.click(firstImage);
 
@@ -45,6 +45,8 @@ describe("PortfolioPage", () => {
   });
 
   it("keeps full-resolution lightbox sources and display-sized page sources", () => {
+    expect(galleryItems).toHaveLength(13);
+
     for (const item of galleryItems) {
       expect(item.displaySrc).toMatch(/^\/images\/display\//);
       expect(item.src).toMatch(/^\/images\/(?!display\/)/);
@@ -62,5 +64,13 @@ describe("PortfolioPage", () => {
         })
       ])
     );
+
+    const facebookGalleryItems = galleryItems.filter((item) => item.src.startsWith("/images/cc-"));
+    expect(facebookGalleryItems).toHaveLength(5);
+    for (const item of facebookGalleryItems) {
+      expect(item.src).toMatch(/^\/images\/cc-/);
+      expect(item.displaySrc).toMatch(/^\/images\/display\/cc-/);
+      expect(item.alt).not.toMatch(/Facebook|unknown|professional/i);
+    }
   });
 });

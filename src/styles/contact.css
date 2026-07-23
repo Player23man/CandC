@@ -69,11 +69,12 @@
   text-transform: uppercase;
 }
 
-.form-field label span {
+.form-field label span,
+.service-choice-group legend span {
   color: #b71227;
 }
 
-.form-field input,
+.form-field input:not([type="checkbox"]),
 .form-field select,
 .form-field textarea {
   width: 100%;
@@ -93,17 +94,85 @@
   resize: vertical;
 }
 
-.form-field input:focus,
+.form-field input:not([type="checkbox"]):focus,
 .form-field select:focus,
 .form-field textarea:focus {
   border-color: var(--print-text);
   background: rgb(255 255 255 / 0.18);
 }
 
-.form-field input[aria-invalid="true"],
+.form-field input:not([type="checkbox"])[aria-invalid="true"],
 .form-field select[aria-invalid="true"],
 .form-field textarea[aria-invalid="true"] {
   border-color: #a90018;
+}
+
+.service-choice-group {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.service-choice-group legend {
+  padding: 0;
+  font-size: 0.78rem;
+  font-weight: 720;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.service-choice-group__help {
+  margin: 0;
+  color: #68635c;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.service-choice-grid {
+  display: grid;
+  border-top: 1px solid #8e8981;
+}
+
+.service-choice {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  min-height: 52px;
+  border-bottom: 1px solid #bdb7ad;
+  padding: 10px 4px;
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.service-choice:has(input:checked) {
+  background: rgb(183 18 39 / 0.08);
+}
+
+.service-choice:has(input:focus-visible) {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+}
+
+.service-choice:has(input:disabled) {
+  color: #858078;
+  cursor: not-allowed;
+}
+
+.service-choice input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--signal);
+}
+
+.service-choice span {
+  font-size: 0.9rem;
+  font-weight: 650;
+  line-height: 1.3;
 }
 
 .field-error {
@@ -177,6 +246,19 @@
 @media (min-width: 680px) {
   .form-row {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .service-choice-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .service-choice:nth-child(odd) {
+    border-right: 1px solid #bdb7ad;
+    padding-right: 18px;
+  }
+
+  .service-choice:nth-child(even) {
+    padding-left: 18px;
   }
 }
 

@@ -35,7 +35,32 @@ describe("ContactForm", () => {
     expect(screen.getByText("Enter your phone number.")).toBeVisible();
     expect(screen.getByText("Enter your email address.")).toBeVisible();
     expect(screen.getByText("Tell us about your vehicle.")).toBeVisible();
+    expect(screen.getByText("Choose at least one service.")).toBeVisible();
     expect(screen.getByRole("status")).toHaveTextContent("");
+  });
+
+  it("allows two service choices and disables a third until one is removed", async () => {
+    const user = userEvent.setup();
+    render(<ContactForm />);
+
+    expect(screen.getByText("Choose up to 2 services.")).toBeVisible();
+    expect(screen.getAllByRole("checkbox")).toHaveLength(6);
+
+    const exterior = screen.getByRole("checkbox", { name: "Exterior Detail" });
+    const interior = screen.getByRole("checkbox", { name: "Interior Detailing" });
+    const ceramic = screen.getByRole("checkbox", { name: "Ceramic Coating" });
+
+    await user.click(exterior);
+    await user.click(interior);
+
+    expect(exterior).toBeChecked();
+    expect(interior).toBeChecked();
+    expect(ceramic).toBeDisabled();
+
+    await user.click(exterior);
+
+    expect(exterior).not.toBeChecked();
+    expect(ceramic).toBeEnabled();
   });
 
   it("requires a vehicle photo when Interior Detailing is selected", async () => {
@@ -44,7 +69,8 @@ describe("ContactForm", () => {
 
     expect(screen.getByText("Optional vehicle photos")).toBeVisible();
 
-    await user.selectOptions(screen.getByLabelText(/Service interest/), "Interior Detailing");
+    await user.click(screen.getByRole("checkbox", { name: "Exterior Detail" }));
+    await user.click(screen.getByRole("checkbox", { name: "Interior Detailing" }));
 
     const photos = screen.getByLabelText(/Vehicle photos/);
     expect(document.querySelector('label[for="quote-photos"] span')).toHaveTextContent("*");
@@ -60,7 +86,8 @@ describe("ContactForm", () => {
     const user = userEvent.setup();
     render(<ContactForm />);
 
-    await user.selectOptions(screen.getByLabelText(/Service interest/), "Interior Detailing");
+    const interior = screen.getByRole("checkbox", { name: "Interior Detailing" });
+    await user.click(interior);
     const photos = screen.getByLabelText(/Vehicle photos/);
     await user.click(screen.getByRole("button", { name: "Get a quote" }));
     expect(screen.getByText("Add at least one interior photo.")).toBeVisible();
@@ -68,7 +95,8 @@ describe("ContactForm", () => {
     await user.upload(photos, new File(["image"], "interior.jpg", { type: "image/jpeg" }));
     expect(screen.queryByText("Add at least one interior photo.")).not.toBeInTheDocument();
 
-    await user.selectOptions(screen.getByLabelText(/Service interest/), "Exterior Detail");
+    await user.click(interior);
+    await user.click(screen.getByRole("checkbox", { name: "Exterior Detail" }));
     expect(screen.getByText("Optional vehicle photos")).toBeVisible();
     expect(photos).toHaveAttribute("aria-required", "false");
   });
@@ -79,7 +107,7 @@ describe("ContactForm", () => {
       phone: "815-555-0100",
       email: "alec@example.com",
       vehicle: "2022 Ford F-150",
-      service: "Ceramic Coating",
+      service: ["Exterior Detail", "Interior Detailing"],
       preference: "Mobile",
       details: "Light swirl marks",
       timing: "Next month"
@@ -87,6 +115,6 @@ describe("ContactForm", () => {
 
     expect(href).toContain("mailto:candcdetailing25%40gmail.com");
     expect(decodeURIComponent(href)).toContain("C&C quote request: 2022 Ford F-150");
-    expect(decodeURIComponent(href)).toContain("Service: Ceramic Coating");
+    expect(decodeURIComponent(href)).toContain("Services: Exterior Detail, Interior Detailing");
   });
 });

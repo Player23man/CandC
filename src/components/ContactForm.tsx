@@ -6,7 +6,7 @@ export type QuoteFormValues = {
   phone: string;
   email: string;
   vehicle: string;
-  service: string;
+  service: string[];
   preference: string;
   details: string;
   timing: string;
@@ -19,7 +19,7 @@ const initialValues: QuoteFormValues = {
   phone: "",
   email: "",
   vehicle: "",
-  service: "",
+  service: [],
   preference: "",
   details: "",
   timing: ""
@@ -32,7 +32,7 @@ export function buildQuoteMailto(values: QuoteFormValues) {
     `Phone: ${values.phone || "Not provided"}`,
     `Email: ${values.email || "Not provided"}`,
     `Vehicle: ${values.vehicle}`,
-    `Service: ${values.service}`,
+    `Services: ${values.service.join(", ")}`,
     `Shop or mobile: ${values.preference || "No preference"}`,
     `Vehicle condition and details: ${values.details}`,
     `Preferred timing: ${values.timing || "Not provided"}`,
@@ -50,9 +50,9 @@ function validateQuote(values: QuoteFormValues, photoCount: number): QuoteFormEr
   if (!values.phone.trim()) errors.phone = "Enter your phone number.";
   if (!values.email.trim()) errors.email = "Enter your email address.";
   if (!values.vehicle.trim()) errors.vehicle = "Tell us about your vehicle.";
-  if (!values.service) errors.service = "Choose a service.";
+  if (values.service.length === 0) errors.service = "Choose at least one service.";
   if (!values.details.trim()) errors.details = "Describe the vehicle’s condition or what you need help with.";
-  if (values.service === "Interior Detailing" && photoCount === 0) {
+  if (values.service.includes("Interior Detailing") && photoCount === 0) {
     errors.photos = "Add at least one interior photo.";
   }
 
@@ -65,10 +65,29 @@ export function ContactForm() {
   const [preparedMailto, setPreparedMailto] = useState("");
   const [status, setStatus] = useState("");
   const [photoCount, setPhotoCount] = useState(0);
-  const requiresInteriorPhotos = values.service === "Interior Detailing";
+  const requiresInteriorPhotos = values.service.includes("Interior Detailing");
+  const serviceLimitReached = values.service.length >= 2;
 
   const updateValue = (field: keyof QuoteFormValues, value: string) => {
     setValues((current) => ({ ...current, [field]: value }));
+  };
+
+  const toggleService = (serviceName: string) => {
+    const isSelected = values.service.includes(serviceName);
+    const nextServices = isSelected
+      ? values.service.filter((service) => service !== serviceName)
+      : serviceLimitReached
+        ? values.service
+        : [...values.service, serviceName];
+
+    setValues((current) => ({ ...current, service: nextServices }));
+
+    if (nextServices.length > 0) {
+      setErrors(({ service: _service, ...current }) => current);
+    }
+    if (!nextServices.includes("Interior Detailing")) {
+      setErrors(({ photos: _photos, ...current }) => current);
+    }
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -154,43 +173,49 @@ export function ContactForm() {
         {errors.vehicle && <p className="field-error" id="quote-vehicle-error">{errors.vehicle}</p>}
       </div>
 
-      <div className="form-row">
-        <div className="form-field">
-          <label htmlFor="quote-service">Service interest <span aria-hidden="true">*</span></label>
-          <select
-            id="quote-service"
-            name="service"
-            value={values.service}
-            aria-invalid={Boolean(errors.service)}
-            aria-describedby={errors.service ? "quote-service-error" : undefined}
-            onChange={(event) => {
-              const nextService = event.target.value;
-              updateValue("service", nextService);
-              if (nextService !== "Interior Detailing") {
-                setErrors(({ photos: _photos, ...current }) => current);
-              }
-            }}
-          >
-            <option value="">Select a service</option>
-            {services.map((service) => <option value={service.name} key={service.id}>{service.name}</option>)}
-            <option value="Not sure">Not sure yet</option>
-          </select>
-          {errors.service && <p className="field-error" id="quote-service-error">{errors.service}</p>}
+      <fieldset
+        className="service-choice-group"
+        aria-invalid={Boolean(errors.service)}
+        aria-describedby={[
+          "quote-service-help",
+          errors.service ? "quote-service-error" : ""
+        ].filter(Boolean).join(" ")}
+      >
+        <legend>Service interest <span aria-hidden="true">*</span></legend>
+        <p className="service-choice-group__help" id="quote-service-help">Choose up to 2 services.</p>
+        <div className="service-choice-grid">
+          {[...services.map((service) => service.name), "Not sure yet"].map((serviceName) => {
+            const checked = values.service.includes(serviceName);
+            return (
+              <label className="service-choice" key={serviceName}>
+                <input
+                  type="checkbox"
+                  name="service"
+                  value={serviceName}
+                  checked={checked}
+                  disabled={!checked && serviceLimitReached}
+                  onChange={() => toggleService(serviceName)}
+                />
+                <span>{serviceName}</span>
+              </label>
+            );
+          })}
         </div>
+        {errors.service && <p className="field-error" id="quote-service-error">{errors.service}</p>}
+      </fieldset>
 
-        <div className="form-field">
-          <label htmlFor="quote-preference">Shop or mobile preference</label>
-          <select
-            id="quote-preference"
-            name="preference"
-            value={values.preference}
-            onChange={(event) => updateValue("preference", event.target.value)}
-          >
-            <option value="">No preference</option>
-            <option value="Shop">Shop</option>
-            <option value="Mobile">Mobile</option>
-          </select>
-        </div>
+      <div className="form-field">
+        <label htmlFor="quote-preference">Shop or mobile preference</label>
+        <select
+          id="quote-preference"
+          name="preference"
+          value={values.preference}
+          onChange={(event) => updateValue("preference", event.target.value)}
+        >
+          <option value="">No preference</option>
+          <option value="Shop">Shop</option>
+          <option value="Mobile">Mobile</option>
+        </select>
       </div>
 
       <div className="form-field">

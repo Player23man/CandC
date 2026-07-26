@@ -315,7 +315,8 @@
 }
 
 .home-proof__comparison .before-after {
-  min-height: 520px;
+  min-height: 0;
+  aspect-ratio: 16 / 10;
 }
 
 .home-proof__supporting {
@@ -580,8 +581,8 @@
   }
 
   .home-proof__comparison .before-after {
-    min-height: 760px;
-    aspect-ratio: auto;
+    min-height: 0;
+    aspect-ratio: 16 / 10;
   }
 
   .home-proof__supporting {

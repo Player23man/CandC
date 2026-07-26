@@ -78,7 +78,12 @@ describe("HomePage", () => {
         name: "Blue paint correction before and after",
       }),
     ).toBeVisible();
-    expect(container.querySelector(".home-proof")).toBeInTheDocument();
+    const proof = container.querySelector(".home-proof");
+    const supporting = container.querySelector(".home-proof__supporting");
+
+    expect(proof).toBeInTheDocument();
+    expect(proof?.querySelectorAll(".home-proof__comparison")).toHaveLength(1);
+    expect(supporting?.querySelectorAll(".home-proof__still")).toHaveLength(2);
     expect(container.querySelectorAll(".home-portfolio figcaption")).toHaveLength(0);
     expect(
       screen.getByAltText("Blue Corvette with a reflective exterior finish"),

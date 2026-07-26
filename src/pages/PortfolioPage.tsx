@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { galleryItems, portfolioChapters } from "../app/gallery-data";
+import { finishedWorkItems, transformationPairs } from "../app/gallery-data";
+import { BeforeAfterSlider } from "../components/BeforeAfterSlider";
 import { CampaignHero } from "../components/CampaignHero";
-import { GalleryChapter } from "../components/GalleryChapter";
 import { GalleryLightbox } from "../components/GalleryLightbox";
 import { QuoteCta } from "../components/QuoteCta";
+import { Reveal } from "../components/Reveal";
 
 export function PortfolioPage() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -15,34 +16,64 @@ export function PortfolioPage() {
         title="The work."
         description="A closer look at the finish, process, and attention that goes into a properly detailed vehicle."
         image={{
-          src: galleryItems[0].displaySrc,
-          alt: galleryItems[0].alt,
-          fetchPriority: "high"
+          src: finishedWorkItems[0].displaySrc,
+          alt: finishedWorkItems[0].alt,
+          fetchPriority: "high",
         }}
         imageAction={{
-          label: galleryItems[0].openLabel,
-          onClick: () => setActiveIndex(0)
+          label: finishedWorkItems[0].openLabel,
+          onClick: () => setActiveIndex(0),
         }}
       />
 
-      <div className="portfolio-chapters" aria-label="Vehicle detailing portfolio">
-        {portfolioChapters.map((chapter) => (
-          <GalleryChapter
-            id={chapter.id}
-            title={chapter.title}
-            layout={chapter.layout}
-            items={chapter.itemIndexes.map((index) => ({ item: galleryItems[index], index }))}
-            onOpen={setActiveIndex}
-            key={chapter.id}
-          />
-        ))}
-      </div>
+      <section
+        className="portfolio-transformations"
+        aria-label="Detailing transformations"
+      >
+        <div className="shell">
+          <Reveal className="portfolio-section-heading">
+            <h2 id="transformations-title">Transformations</h2>
+          </Reveal>
+          <div className="transformation-list">
+            {transformationPairs.map((pair, index) => (
+              <Reveal className="transformation-list__item" key={pair.id}>
+                <BeforeAfterSlider pair={pair} priority={index === 0} />
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="finished-work" aria-labelledby="finished-work-title">
+        <div className="shell">
+          <Reveal className="portfolio-section-heading portfolio-section-heading--light">
+            <h2 id="finished-work-title">Finished work</h2>
+          </Reveal>
+          <div className="finished-work__grid">
+            {finishedWorkItems.map((item, index) => (
+              <Reveal
+                className={`finished-work__item ${item.className ?? ""}`.trim()}
+                delay={(index % 2) * 0.06}
+                key={item.src}
+              >
+                <button
+                  type="button"
+                  aria-label={item.openLabel}
+                  onClick={() => setActiveIndex(index)}
+                >
+                  <img src={item.displaySrc} alt={item.alt} loading="lazy" />
+                </button>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <QuoteCta />
 
       {activeIndex !== null && (
         <GalleryLightbox
-          items={galleryItems}
+          items={finishedWorkItems}
           activeIndex={activeIndex}
           onChange={setActiveIndex}
           onClose={() => setActiveIndex(null)}

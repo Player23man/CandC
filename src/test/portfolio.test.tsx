@@ -9,40 +9,47 @@ import {
 import { PortfolioPage } from "../pages/PortfolioPage";
 
 describe("PortfolioPage", () => {
-  it("renders the editorial gallery and opens an accessible lightbox", () => {
+  it("renders six editorial comparisons and a caption-free finished-work grid", () => {
     render(
       <MemoryRouter>
         <PortfolioPage />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
-    expect(document.querySelector(".campaign-hero--portfolio")).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "The work." })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Finish" })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Process" })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Interior" })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Protection" })).toBeVisible();
-    expect(screen.getAllByRole("button", { name: /Open .* detail/ })).toHaveLength(13);
-    const firstImage = screen.getByRole("button", { name: "Open coupe detail" });
-    fireEvent.click(firstImage);
-
-    expect(screen.getByRole("dialog", { name: "Portfolio image viewer" })).toBeVisible();
-    expect(screen.getByRole("button", { name: "Close image viewer" })).toHaveFocus();
+    const transformations = screen.getByRole("region", {
+      name: "Detailing transformations",
+    });
+    expect(within(transformations).getAllByRole("slider")).toHaveLength(6);
+    expect(
+      screen.getByRole("heading", { name: "Transformations" }),
+    ).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Finished work" })).toBeVisible();
+    expect(document.querySelectorAll(".portfolio-page figcaption")).toHaveLength(0);
+    expect(
+      screen.getAllByRole("button", { name: /Open .* detail/ }),
+    ).toHaveLength(finishedWorkItems.length + 1);
   });
 
-  it("supports Escape and previous/next keyboard controls", () => {
+  it("opens finished work and supports Escape and previous/next keyboard controls", () => {
     render(
       <MemoryRouter>
         <PortfolioPage />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
-    fireEvent.click(screen.getByRole("button", { name: "Open coupe detail" }));
+    fireEvent.click(
+      screen.getAllByRole("button", { name: "Open blue Corvette detail" })[0],
+    );
     const dialog = screen.getByRole("dialog", { name: "Portfolio image viewer" });
-    expect(within(dialog).getByAltText("Glossy orange coupe after exterior detailing")).toBeVisible();
+    expect(
+      within(dialog).getByAltText("Blue Corvette with a reflective exterior finish"),
+    ).toBeVisible();
+    expect(screen.getByRole("button", { name: "Close image viewer" })).toHaveFocus();
 
     fireEvent.keyDown(document, { key: "ArrowRight" });
-    expect(within(dialog).getByAltText("Black sport utility vehicle receiving a careful hand wash")).toBeVisible();
+    expect(
+      within(dialog).getByAltText("Black Porsche Taycan receiving a careful hand wash"),
+    ).toBeVisible();
 
     fireEvent.keyDown(document, { key: "Escape" });
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();

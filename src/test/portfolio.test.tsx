@@ -1,7 +1,11 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
-import { galleryItems } from "../app/gallery-data";
+import {
+  finishedWorkItems,
+  homepageProof,
+  transformationPairs,
+} from "../app/gallery-data";
 import { PortfolioPage } from "../pages/PortfolioPage";
 
 describe("PortfolioPage", () => {
@@ -44,33 +48,25 @@ describe("PortfolioPage", () => {
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
 
-  it("keeps full-resolution lightbox sources and display-sized page sources", () => {
-    expect(galleryItems).toHaveLength(13);
+  it("models six local transformation pairs and a curated finished-work set", () => {
+    expect(transformationPairs.map((pair) => pair.id)).toEqual([
+      "paint-correction",
+      "driver-footwell",
+      "cargo-area",
+      "center-console",
+      "exterior-panel",
+      "engine-bay",
+    ]);
 
-    for (const item of galleryItems) {
-      expect(item.displaySrc).toMatch(/^\/images\/display\//);
-      expect(item.src).toMatch(/^\/images\/(?!display\/)/);
+    for (const pair of transformationPairs) {
+      expect(pair.before.src).toMatch(/^\/images\/cc-/);
+      expect(pair.before.displaySrc).toMatch(/^\/images\/display\/cc-/);
+      expect(pair.after.src).toMatch(/^\/images\/cc-/);
+      expect(pair.after.displaySrc).toMatch(/^\/images\/display\/cc-/);
     }
 
-    expect(galleryItems).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          src: "/images/interior-before.jpg",
-          displaySrc: "/images/display/interior-before.jpg"
-        }),
-        expect.objectContaining({
-          src: "/images/interior-detailing.jpg",
-          displaySrc: "/images/display/interior-detailing.jpg"
-        })
-      ])
-    );
-
-    const facebookGalleryItems = galleryItems.filter((item) => item.src.startsWith("/images/cc-"));
-    expect(facebookGalleryItems).toHaveLength(5);
-    for (const item of facebookGalleryItems) {
-      expect(item.src).toMatch(/^\/images\/cc-/);
-      expect(item.displaySrc).toMatch(/^\/images\/display\/cc-/);
-      expect(item.alt).not.toMatch(/Facebook|unknown|professional/i);
-    }
+    expect(finishedWorkItems).toHaveLength(6);
+    expect(homepageProof.transformation.id).toBe("paint-correction");
+    expect(homepageProof.supportingItems).toHaveLength(2);
   });
 });

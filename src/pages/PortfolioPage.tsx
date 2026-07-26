@@ -6,6 +6,13 @@ import { GalleryLightbox } from "../components/GalleryLightbox";
 import { QuoteCta } from "../components/QuoteCta";
 import { Reveal } from "../components/Reveal";
 
+function pairItems<T>(items: T[]) {
+  return Array.from(
+    { length: Math.ceil(items.length / 2) },
+    (_, rowIndex) => items.slice(rowIndex * 2, rowIndex * 2 + 2),
+  );
+}
+
 export function PortfolioPage() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
@@ -35,10 +42,22 @@ export function PortfolioPage() {
             <h2 id="transformations-title">Transformations</h2>
           </Reveal>
           <div className="transformation-list">
-            {transformationPairs.map((pair, index) => (
-              <Reveal className="transformation-list__item" key={pair.id}>
-                <BeforeAfterSlider pair={pair} priority={index === 0} />
-              </Reveal>
+            {pairItems(transformationPairs).map((row, rowIndex) => (
+              <div
+                className={`transformation-row transformation-row--${
+                  rowIndex === 1 ? "wide-right" : "wide-left"
+                }`}
+                key={row[0].id}
+              >
+                {row.map((pair, itemIndex) => (
+                  <Reveal className="transformation-list__item" key={pair.id}>
+                    <BeforeAfterSlider
+                      pair={pair}
+                      priority={rowIndex === 0 && itemIndex === 0}
+                    />
+                  </Reveal>
+                ))}
+              </div>
             ))}
           </div>
         </div>
@@ -50,20 +69,33 @@ export function PortfolioPage() {
             <h2 id="finished-work-title">Finished work</h2>
           </Reveal>
           <div className="finished-work__grid">
-            {finishedWorkItems.map((item, index) => (
-              <Reveal
-                className={`finished-work__item ${item.className ?? ""}`.trim()}
-                delay={(index % 2) * 0.06}
-                key={item.src}
+            {pairItems(finishedWorkItems).map((row, rowIndex) => (
+              <div
+                className={`finished-work__row finished-work__row--${
+                  rowIndex === 1 ? "wide-right" : "wide-left"
+                }`}
+                key={row[0].src}
               >
-                <button
-                  type="button"
-                  aria-label={item.openLabel}
-                  onClick={() => setActiveIndex(index)}
-                >
-                  <img src={item.displaySrc} alt={item.alt} loading="lazy" />
-                </button>
-              </Reveal>
+                {row.map((item) => {
+                  const itemIndex = finishedWorkItems.indexOf(item);
+
+                  return (
+                    <Reveal
+                      className={`finished-work__item ${item.className ?? ""}`.trim()}
+                      delay={(itemIndex % 2) * 0.06}
+                      key={item.src}
+                    >
+                      <button
+                        type="button"
+                        aria-label={item.openLabel}
+                        onClick={() => setActiveIndex(itemIndex)}
+                      >
+                        <img src={item.displaySrc} alt={item.alt} loading="lazy" />
+                      </button>
+                    </Reveal>
+                  );
+                })}
+              </div>
             ))}
           </div>
         </div>

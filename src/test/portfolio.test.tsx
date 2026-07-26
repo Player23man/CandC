@@ -28,6 +28,18 @@ describe("PortfolioPage", () => {
     expect(
       screen.getAllByRole("button", { name: /Open .* detail/ }),
     ).toHaveLength(finishedWorkItems.length + 1);
+
+    const transformationRows = document.querySelectorAll(".transformation-row");
+    expect(transformationRows).toHaveLength(3);
+    for (const row of transformationRows) {
+      expect(row.querySelectorAll(".transformation-list__item")).toHaveLength(2);
+    }
+
+    const finishedRows = document.querySelectorAll(".finished-work__row");
+    expect(finishedRows).toHaveLength(3);
+    for (const row of finishedRows) {
+      expect(row.querySelectorAll(".finished-work__item")).toHaveLength(2);
+    }
   });
 
   it("opens finished work and supports Escape and previous/next keyboard controls", () => {

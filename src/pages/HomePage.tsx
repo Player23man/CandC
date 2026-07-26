@@ -1,5 +1,7 @@
 import { ArrowRight } from "@phosphor-icons/react";
 import { Link } from "react-router-dom";
+import { homepageProof } from "../app/gallery-data";
+import { BeforeAfterSlider } from "../components/BeforeAfterSlider";
 import { CampaignHero } from "../components/CampaignHero";
 import { QuoteCta } from "../components/QuoteCta";
 import { Reveal } from "../components/Reveal";
@@ -55,26 +57,20 @@ export function HomePage() {
               <ArrowRight size={18} weight="bold" aria-hidden="true" />
             </Link>
           </Reveal>
-          <div className="finish-spread">
-            <Reveal className="finish-spread__lead">
-              <figure>
-                <img src="/images/gallery-suv.jpg" alt="Black vehicle being hand washed" loading="lazy" />
-                <figcaption>Black vehicle, hand washed</figcaption>
-              </figure>
+          <div className="home-proof">
+            <Reveal className="home-proof__comparison">
+              <BeforeAfterSlider pair={homepageProof.transformation} />
             </Reveal>
-            <div className="finish-spread__supporting">
-              <Reveal className="finish-spread__supporting-item" delay={0.06}>
-                <figure>
-                  <img src="/images/gallery-sport.jpg" alt="Glossy red vehicle exterior" loading="lazy" />
-                  <figcaption>Glossy red vehicle exterior</figcaption>
-                </figure>
-              </Reveal>
-              <Reveal className="finish-spread__supporting-item finish-spread__supporting-item--offset" delay={0.12}>
-                <figure>
-                  <img src="/images/ceramic-display.jpg" alt="Ceramic coating display on a red vehicle" loading="lazy" />
-                  <figcaption>Ceramic coating display</figcaption>
-                </figure>
-              </Reveal>
+            <div className="home-proof__supporting">
+              {homepageProof.supportingItems.map((item, index) => (
+                <Reveal
+                  className={`home-proof__still home-proof__still--${index + 1}`}
+                  delay={(index + 1) * 0.06}
+                  key={item.src}
+                >
+                  <img src={item.displaySrc} alt={item.alt} loading="lazy" />
+                </Reveal>
+              ))}
             </div>
           </div>
         </div>

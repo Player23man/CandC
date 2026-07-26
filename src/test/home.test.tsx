@@ -11,10 +11,11 @@ describe("HomePage", () => {
       </MemoryRouter>
     );
 
-    const heroImage = screen.getByRole("img", {
-      name: "Black Porsche Taycan receiving a careful hand wash"
-    });
+    const heroImage = document.querySelector(".campaign-hero--home .campaign-hero__image");
 
+    expect(heroImage).toHaveAccessibleName(
+      "Black Porsche Taycan receiving a careful hand wash",
+    );
     expect(heroImage).toHaveAttribute("src", "/images/gallery-suv.jpg");
     expect(heroImage).toHaveAttribute(
       "srcset",
@@ -63,5 +64,24 @@ describe("HomePage", () => {
 
     expect(screen.getByText(/I felt like I drove away in a brand-new car/)).toBeVisible();
     expect(screen.getAllByRole("link", { name: "Get a quote" }).length).toBeGreaterThan(0);
+  });
+
+  it("uses the shared paint comparison and renders no image captions", () => {
+    const { container } = render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole("slider", {
+        name: "Blue paint correction before and after",
+      }),
+    ).toBeVisible();
+    expect(container.querySelector(".home-proof")).toBeInTheDocument();
+    expect(container.querySelectorAll(".home-portfolio figcaption")).toHaveLength(0);
+    expect(
+      screen.getByAltText("Blue Corvette with a reflective exterior finish"),
+    ).toBeVisible();
   });
 });

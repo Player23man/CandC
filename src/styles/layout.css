@@ -157,7 +157,21 @@
 }
 
 .campaign-hero--portfolio .campaign-hero__scrim {
-  background: rgb(4 4 4 / 0.35);
+  background: rgb(4 4 4 / 0.52);
+}
+
+.campaign-hero--portfolio h1,
+.campaign-hero--portfolio p {
+  text-shadow: 0 2px 20px rgb(0 0 0 / 0.8);
+}
+
+.campaign-hero--portfolio p {
+  width: fit-content;
+  padding: 11px 14px 12px;
+  background: rgb(4 4 4 / 0.82);
+  color: #fff;
+  font-weight: 620;
+  line-height: 1.45;
 }
 
 .campaign-hero--portfolio .campaign-hero__image {
@@ -572,6 +586,10 @@
 
   .campaign-hero--portfolio .campaign-hero__content {
     padding-block: 56px 40px;
+  }
+
+  .campaign-hero--portfolio .campaign-hero__scrim {
+    background: rgb(4 4 4 / 0.58);
   }
 
   .specialist-rail__item {

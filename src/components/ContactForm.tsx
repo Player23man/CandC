@@ -66,7 +66,6 @@ export function ContactForm() {
   const [status, setStatus] = useState("");
   const [photoCount, setPhotoCount] = useState(0);
   const requiresInteriorPhotos = values.service.includes("Interior Detailing");
-  const serviceLimitReached = values.service.length >= 2;
 
   const updateValue = (field: keyof QuoteFormValues, value: string) => {
     setValues((current) => ({ ...current, [field]: value }));
@@ -76,9 +75,7 @@ export function ContactForm() {
     const isSelected = values.service.includes(serviceName);
     const nextServices = isSelected
       ? values.service.filter((service) => service !== serviceName)
-      : serviceLimitReached
-        ? values.service
-        : [...values.service, serviceName];
+      : [...values.service, serviceName];
 
     setValues((current) => ({ ...current, service: nextServices }));
 
@@ -182,7 +179,7 @@ export function ContactForm() {
         ].filter(Boolean).join(" ")}
       >
         <legend>Service interest <span aria-hidden="true">*</span></legend>
-        <p className="service-choice-group__help" id="quote-service-help">Choose up to 2 services.</p>
+        <p className="service-choice-group__help" id="quote-service-help">Choose all services that apply.</p>
         <div className="service-choice-grid">
           {[...services.map((service) => service.name), "Not sure yet"].map((serviceName) => {
             const checked = values.service.includes(serviceName);
@@ -193,7 +190,6 @@ export function ContactForm() {
                   name="service"
                   value={serviceName}
                   checked={checked}
-                  disabled={!checked && serviceLimitReached}
                   onChange={() => toggleService(serviceName)}
                 />
                 <span>{serviceName}</span>
@@ -269,7 +265,9 @@ export function ContactForm() {
       </div>
 
       <div className="quote-form__submit">
-        <button className="button button--primary" type="submit">Get a quote</button>
+        <button className="button button--primary button--quote" type="submit" aria-label="Get a quote">
+          Get a quote
+        </button>
         <p>Submitting prepares an email. It does not send anything automatically.</p>
       </div>
 

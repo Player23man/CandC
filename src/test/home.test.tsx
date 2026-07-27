@@ -63,7 +63,11 @@ describe("HomePage", () => {
     );
 
     expect(screen.getByText(/I felt like I drove away in a brand-new car/)).toBeVisible();
-    expect(screen.getAllByRole("link", { name: "Get a quote" }).length).toBeGreaterThan(0);
+    const quoteLinks = screen.getAllByRole("link", { name: "Get a quote" });
+    expect(quoteLinks.length).toBeGreaterThan(0);
+    quoteLinks.forEach((quoteLink) => {
+      expect(quoteLink).toHaveClass("button--quote");
+    });
   });
 
   it("uses the shared paint comparison and renders no image captions", () => {

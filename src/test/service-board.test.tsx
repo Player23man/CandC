@@ -93,5 +93,10 @@ describe("ServiceBoard", () => {
     const correctionRegion = mobile.getByRole("region", { name: "Paint Correction details" });
     expect(within(correctionRegion).getByText("Wet sanding is an additional charge")).toBeVisible();
     expect(correctionRegion.querySelectorAll(".service-board__spec-row").length).toBeGreaterThan(0);
+    expect(
+      within(correctionRegion).getByRole("img", {
+        name: "Blue corrected paint reflecting the shop lights"
+      })
+    ).toHaveAttribute("src", "/images/cc-paint-after.jpg");
   });
 });

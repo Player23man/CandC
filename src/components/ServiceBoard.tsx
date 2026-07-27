@@ -12,8 +12,8 @@ const serviceImages: Record<Service["id"], { src: string; alt: string }> = {
     alt: "Clean light-colored vehicle seats and floor area"
   },
   correction: {
-    src: "/images/detail-process.jpg",
-    alt: "White performance car under studio lighting"
+    src: "/images/cc-paint-after.jpg",
+    alt: "Blue corrected paint reflecting the shop lights"
   },
   ceramic: {
     src: "/images/ceramic-display.jpg",
@@ -41,7 +41,13 @@ function ServiceDetails({ service }: { service: Service }) {
       </div>
 
       <div className="service-board__image-wrap">
-        <img src={image.src} alt={image.alt} loading="lazy" decoding="async" />
+        <img
+          src={image.src}
+          alt={image.alt}
+          data-service-image={service.id}
+          loading="lazy"
+          decoding="async"
+        />
       </div>
 
       <div className="service-board__specs">

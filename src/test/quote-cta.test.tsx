@@ -15,6 +15,7 @@ it("renders the contact dock with Collin as the only specialist", () => {
   expect(screen.queryByText("Exterior specialist")).not.toBeInTheDocument();
   expect(screen.queryByText("Interior specialist")).not.toBeInTheDocument();
   expect(screen.getByRole("link", { name: "Get a quote" })).toHaveAttribute("href", "/contact");
+  expect(screen.getByRole("link", { name: "Get a quote" })).toHaveClass("button--quote");
   expect(screen.getByRole("link", { name: /Collin.*815-922-1593/ })).toHaveAttribute("href", "tel:8159221593");
   expect(screen.queryByText("Caleb")).not.toBeInTheDocument();
 });

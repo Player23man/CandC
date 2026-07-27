@@ -1,10 +1,54 @@
 .contact-rail-band {
-  padding-block: clamp(56px, 7vw, 92px);
-  border-top: 3px solid var(--signal);
-  background: var(--canvas);
+  padding-block: clamp(68px, 9vw, 116px) 0;
+  border-top: 1px solid #bdb7ad;
+  background: var(--print);
+  color: var(--print-text);
+}
+
+.contact-rail-band__inner {
+  display: grid;
+  gap: clamp(38px, 6vw, 72px);
+}
+
+.contact-rail-band__heading h2 {
+  max-width: 11ch;
+  margin-bottom: 18px;
+  font-size: clamp(2.35rem, 6vw, 4.5rem);
+  font-weight: 740;
+  letter-spacing: -0.06em;
+  line-height: 0.95;
+}
+
+.contact-rail-band__heading p {
+  max-width: 430px;
+  margin: 0;
+  color: #625d56;
+  line-height: 1.6;
+}
+
+.contact-rail-band .specialist-rail {
+  border-color: #bdb7ad;
+}
+
+.contact-rail-band .specialist-rail__item {
+  border-color: #bdb7ad;
+  color: var(--print-text);
+}
+
+.contact-rail-band .specialist-rail__identity small {
+  color: #716b63;
+}
+
+.contact-rail-band .specialist-rail__item:hover {
+  color: #b71227;
 }
 
 .quote-chapter {
+  --quote-action-bg: var(--print-text);
+  --quote-action-border: var(--print-text);
+  --quote-action-fg: var(--text);
+  --quote-action-hover: #272727;
+
   padding-block: clamp(88px, 12vw, 170px);
   background: var(--print);
   color: var(--print-text);
@@ -212,6 +256,10 @@
   gap: 18px;
 }
 
+.quote-form__submit .button--quote {
+  width: min(100%, 250px);
+}
+
 .quote-form__status {
   min-height: 1.5em;
   color: #514d47;
@@ -263,22 +311,11 @@
 }
 
 @media (min-width: 980px) {
-  .contact-rail-band .specialist-rail {
+  .contact-rail-band__heading {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .contact-rail-band .specialist-rail__item:nth-child(odd) {
-    padding-right: 28px;
-    border-right: 1px solid var(--line);
-  }
-
-  .contact-rail-band .specialist-rail__item:nth-child(even) {
-    padding-left: 28px;
-  }
-
-  .contact-rail-band .specialist-rail__item:nth-last-child(-n + 2) {
-    border-bottom: 0;
+    grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.6fr);
+    align-items: end;
+    gap: 72px;
   }
 
   .quote-chapter__inner {

@@ -1,6 +1,7 @@
-import { List, X } from "@phosphor-icons/react";
+import { ArrowUpRight, List, Phone, X } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import { businessProfile } from "../app/site-data";
 
 const navItems = [
   { label: "Home", to: "/" },
@@ -15,6 +16,19 @@ export function SiteHeader() {
   useEffect(() => {
     setMenuOpen(false);
   }, [location.pathname]);
+
+  useEffect(() => {
+    if (!menuOpen) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [menuOpen]);
 
   return (
     <header className="site-header">
@@ -32,7 +46,11 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <Link className="button button--primary site-header__quote" to="/contact">
+        <Link
+          className="button button--primary button--quote site-header__quote"
+          to="/contact"
+          aria-label="Get a quote"
+        >
           Get a quote
         </Link>
 
@@ -54,14 +72,46 @@ export function SiteHeader() {
         aria-label="Mobile navigation"
         aria-hidden={!menuOpen}
       >
-        {navItems.map((item) => (
-          <NavLink key={item.to} to={item.to} end={item.to === "/"} tabIndex={menuOpen ? 0 : -1}>
-            {item.label}
-          </NavLink>
-        ))}
-        <Link className="button button--primary" to="/contact" tabIndex={menuOpen ? 0 : -1}>
-          Get a quote
-        </Link>
+        <div className="mobile-nav__routes">
+          {navItems.map((item, index) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              end={item.to === "/"}
+              aria-label={item.label}
+              tabIndex={menuOpen ? 0 : -1}
+            >
+              <span className="mobile-nav__index" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span className="mobile-nav__label">{item.label}</span>
+              <ArrowUpRight className="mobile-nav__route-arrow" size={24} weight="bold" aria-hidden="true" />
+            </NavLink>
+          ))}
+        </div>
+
+        <div className="mobile-nav__utility">
+          <div className="mobile-nav__meta">
+            <span>{businessProfile.location}</span>
+            <a
+              href={`tel:${businessProfile.collin.tel}`}
+              aria-label={`Call ${businessProfile.collin.name} at ${businessProfile.collin.phone}`}
+              tabIndex={menuOpen ? 0 : -1}
+            >
+              <Phone size={18} weight="bold" aria-hidden="true" />
+              <span>{businessProfile.collin.phone}</span>
+            </a>
+          </div>
+
+          <Link
+            className="button button--primary button--quote"
+            to="/contact"
+            aria-label="Get a quote"
+            tabIndex={menuOpen ? 0 : -1}
+          >
+            Get a quote
+          </Link>
+        </div>
       </nav>
     </header>
   );

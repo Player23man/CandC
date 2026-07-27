@@ -14,7 +14,17 @@ it("renders the concierge campaign, contact rail, and request guidance", () => {
 
   expect(document.querySelector(".campaign-hero--contact")).toBeInTheDocument();
   expect(screen.getByRole("heading", { name: "Let’s talk about your vehicle." })).toBeVisible();
+  expect(screen.getByRole("heading", { name: "Contact C&C Detailing" })).toBeVisible();
+  expect(screen.getByText("Call, email, or message us on Facebook.")).toBeVisible();
   expect(screen.getByRole("link", { name: /Collin.*815-922-1593/ })).toHaveAttribute("href", "tel:8159221593");
+  expect(screen.getByRole("link", { name: /candcdetailing25@gmail.com/ })).toHaveAttribute(
+    "href",
+    "mailto:candcdetailing25@gmail.com"
+  );
+  expect(screen.getByRole("link", { name: /Facebook/ })).toHaveAttribute(
+    "href",
+    "https://www.facebook.com/profile.php?id=61574139886965"
+  );
   expect(screen.queryByText("Exterior specialist")).not.toBeInTheDocument();
   expect(screen.queryByText("Caleb")).not.toBeInTheDocument();
   expect(screen.getByRole("heading", { name: "Before you request a quote" })).toBeVisible();
@@ -29,7 +39,9 @@ describe("ContactForm", () => {
     expect(document.querySelector('label[for="quote-phone"] span')).toHaveTextContent("*");
     expect(document.querySelector('label[for="quote-email"] span')).toHaveTextContent("*");
 
-    await user.click(screen.getByRole("button", { name: "Get a quote" }));
+    const quoteButton = screen.getByRole("button", { name: "Get a quote" });
+    expect(quoteButton).toHaveClass("button--quote");
+    await user.click(quoteButton);
 
     expect(screen.getByText("Enter your name.")).toBeVisible();
     expect(screen.getByText("Enter your phone number.")).toBeVisible();
@@ -39,28 +51,22 @@ describe("ContactForm", () => {
     expect(screen.getByRole("status")).toHaveTextContent("");
   });
 
-  it("allows two service choices and disables a third until one is removed", async () => {
+  it("allows customers to select every service that applies", async () => {
     const user = userEvent.setup();
     render(<ContactForm />);
 
-    expect(screen.getByText("Choose up to 2 services.")).toBeVisible();
-    expect(screen.getAllByRole("checkbox")).toHaveLength(6);
+    expect(screen.getByText("Choose all services that apply.")).toBeVisible();
+    const serviceChoices = screen.getAllByRole("checkbox");
+    expect(serviceChoices).toHaveLength(6);
 
-    const exterior = screen.getByRole("checkbox", { name: "Exterior Detail" });
-    const interior = screen.getByRole("checkbox", { name: "Interior Detailing" });
-    const ceramic = screen.getByRole("checkbox", { name: "Ceramic Coating" });
+    for (const serviceChoice of serviceChoices) {
+      await user.click(serviceChoice);
+    }
 
-    await user.click(exterior);
-    await user.click(interior);
-
-    expect(exterior).toBeChecked();
-    expect(interior).toBeChecked();
-    expect(ceramic).toBeDisabled();
-
-    await user.click(exterior);
-
-    expect(exterior).not.toBeChecked();
-    expect(ceramic).toBeEnabled();
+    serviceChoices.forEach((serviceChoice) => {
+      expect(serviceChoice).toBeChecked();
+      expect(serviceChoice).toBeEnabled();
+    });
   });
 
   it("requires a vehicle photo when Interior Detailing is selected", async () => {

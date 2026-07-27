@@ -12,8 +12,12 @@ export function ContactPage() {
         description="C&C works by appointment at the shop and through mobile service around Channahon."
       />
 
-      <section className="contact-rail-band" aria-label="Contact C&C Detailing">
-        <div className="shell">
+      <section className="contact-rail-band" aria-labelledby="contact-rail-title">
+        <div className="shell contact-rail-band__inner">
+          <div className="contact-rail-band__heading">
+            <h2 id="contact-rail-title">Contact C&amp;C Detailing</h2>
+            <p>Call, email, or message us on Facebook.</p>
+          </div>
           <SpecialistRail />
         </div>
       </section>

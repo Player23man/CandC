@@ -4,6 +4,8 @@
 **Status:** Approved design direction; awaiting written-spec approval  
 **Routes:** `/`, `/portfolio`, `/contact`
 
+> **July 26 amendment:** The two-service selection cap is removed. Customers may select every service that applies; this amendment supersedes the limit requirements below.
+
 ## Summary
 
 Apply Collin's latest service and quote-request corrections while expanding the site's authentic photography from C&C Detailing's public Facebook page. Keep the existing Leica/Polestar-inspired editorial system, route structure, service board, portfolio chapters, and mail-app quote handoff.
@@ -48,15 +50,14 @@ Do not change the exterior starting price or the existing paid add-ons for hand 
 Replace the single-service `<select>` with an accessible checkbox group.
 
 - Label the group `Service interest`.
-- Add visible helper text: `Choose up to 2 services.`
+- Add visible helper text: `Choose all services that apply.`
 - Render every service from the shared `services` data and retain `Not sure yet` as an option.
 - Require at least one selection.
-- Allow no more than two selections.
-- When two options are selected, disable the remaining unchecked options until the customer unchecks one.
-- Keep selected options enabled so they can always be removed.
+- Allow any number of selections.
+- Keep every option enabled so customers can add or remove services at any time.
 - Associate validation and limit guidance with the group for assistive technology.
 
-The two-selection maximum applies across all options, including `Not sure yet`.
+The unlimited selection behavior applies across all options, including `Not sure yet`.
 
 ### Form state and validation
 
@@ -118,9 +119,8 @@ Use test-first changes for each behavior:
 - Exterior data contains `hydro sealer` and no longer contains `spray wax`.
 - The quote form renders a checkbox for every service plus `Not sure yet`.
 - The quote form requires at least one service.
-- Customers can select two services.
-- Remaining unchecked services disable at the two-selection limit.
-- Unchecking one service re-enables the other choices.
+- Customers can select every listed service.
+- All service choices remain enabled after multiple selections.
 - Interior photos are required when Interior Detailing is either selected service.
 - Removing Interior Detailing clears the conditional photo requirement.
 - The prepared email lists one or two selected services under `Services:`.

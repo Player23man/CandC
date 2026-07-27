@@ -264,6 +264,10 @@
   object-fit: cover;
 }
 
+.service-board__image-wrap img[data-service-image="correction"] {
+  object-position: center 44%;
+}
+
 .service-board__specs {
   display: grid;
   gap: 32px;
@@ -384,46 +388,61 @@
 }
 
 .quote-cta {
-  border-top: 3px solid var(--signal);
-  background: var(--canvas);
-  color: var(--text);
+  --quote-action-bg: var(--print-text);
+  --quote-action-border: var(--print-text);
+  --quote-action-fg: var(--text);
+  --quote-action-hover: #272727;
+
+  border-top: 1px solid #bdb7ad;
+  background: var(--print);
+  color: var(--print-text);
 }
 
 .quote-cta__inner {
   display: grid;
-  gap: 42px;
-  padding-block: 76px;
+  gap: 38px;
+  padding-block: 70px 64px;
 }
 
 .quote-cta h2 {
-  max-width: 720px;
+  max-width: 11ch;
   margin-bottom: 18px;
-  font-size: clamp(2.35rem, 5vw, 4.25rem);
+  font-size: clamp(2.45rem, 9.2vw, 4.8rem);
   font-weight: 740;
-  letter-spacing: -0.055em;
-  line-height: 0.98;
+  letter-spacing: -0.06em;
+  line-height: 0.94;
 }
 
 .quote-cta__heading p {
   max-width: 460px;
   margin: 0;
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  line-height: 1.5;
+  color: #625d56;
+  font-size: 0.94rem;
+  line-height: 1.6;
 }
 
 .quote-cta__action {
-  display: inline-flex;
+  display: flex;
   align-items: center;
 }
 
 .quote-cta__primary {
-  gap: 12px;
-  min-width: 168px;
+  width: 100%;
+  min-width: 190px;
 }
 
 .quote-cta__specialists {
   min-width: 0;
+  border-color: #bdb7ad;
+}
+
+.quote-cta__specialists .specialist-rail__item {
+  border-color: #bdb7ad;
+  color: var(--print-text);
+}
+
+.quote-cta__specialists .specialist-rail__identity small {
+  color: #716b63;
 }
 
 @media (min-width: 768px) {
@@ -615,8 +634,8 @@
   .quote-cta__inner {
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    gap: 48px;
-    padding-block: 96px;
+    gap: 54px 72px;
+    padding-block: 92px 76px;
   }
 
   .quote-cta__specialists {
@@ -625,6 +644,10 @@
 
   .quote-cta h2 {
     margin-bottom: 20px;
+  }
+
+  .quote-cta__primary {
+    width: auto;
   }
 }
 
@@ -642,18 +665,14 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .quote-cta__inner {
-    grid-template-columns: minmax(0, 1.1fr) auto minmax(360px, 0.9fr);
-    gap: clamp(40px, 6vw, 92px);
-  }
-
-  .quote-cta__specialists {
-    grid-column: auto;
-  }
 }
 
 @media (max-width: 540px) {
-  .campaign-hero__actions .button {
+  .campaign-hero__actions .button:not(.button--quote) {
     padding-inline: 20px;
+  }
+
+  .campaign-hero__actions .button--quote {
+    padding: 0 0 0 20px;
   }
 }

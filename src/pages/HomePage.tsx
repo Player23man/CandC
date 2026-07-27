@@ -23,7 +23,9 @@ export function HomePage() {
         }}
         actions={
           <>
-            <Link className="button button--primary" to="/contact">Get a quote</Link>
+            <Link className="button button--primary button--quote" to="/contact" aria-label="Get a quote">
+              Get a quote
+            </Link>
             <Link className="hero-link" to="/portfolio">
               View our work
               <ArrowRight size={19} weight="bold" aria-hidden="true" />

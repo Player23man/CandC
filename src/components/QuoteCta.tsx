@@ -1,4 +1,3 @@
-import { ArrowRight } from "@phosphor-icons/react";
 import { Link } from "react-router-dom";
 import { SpecialistRail } from "./SpecialistRail";
 
@@ -12,9 +11,12 @@ export function QuoteCta() {
         </div>
 
         <div className="quote-cta__action">
-          <Link className="button button--primary quote-cta__primary" to="/contact">
+          <Link
+            className="button button--primary button--quote quote-cta__primary"
+            to="/contact"
+            aria-label="Get a quote"
+          >
             Get a quote
-            <ArrowRight size={18} weight="bold" aria-hidden="true" />
           </Link>
         </div>
 

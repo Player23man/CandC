@@ -125,6 +125,48 @@ p {
   background: var(--signal-hover);
 }
 
+.button--quote {
+  --quote-action-bg: var(--text);
+  --quote-action-border: var(--text);
+  --quote-action-fg: var(--canvas);
+  --quote-action-hover: #d9d5ce;
+
+  min-height: 50px;
+  justify-content: flex-start;
+  gap: 18px;
+  border-color: var(--quote-action-border);
+  padding: 0 0 0 22px;
+  background: var(--quote-action-bg);
+  color: var(--quote-action-fg);
+  overflow: hidden;
+}
+
+.button--quote::after {
+  display: grid;
+  width: 50px;
+  margin-left: auto;
+  align-self: stretch;
+  place-items: center;
+  background: var(--signal);
+  color: #fff;
+  content: "↗";
+  font-size: 1.1rem;
+  font-weight: 560;
+  line-height: 1;
+  transition: background-color 180ms ease, text-indent 180ms ease;
+}
+
+.button--quote:hover {
+  border-color: var(--quote-action-border);
+  background: var(--quote-action-hover);
+  color: var(--quote-action-fg);
+}
+
+.button--quote:hover::after {
+  background: var(--signal-hover);
+  text-indent: 4px;
+}
+
 .button--outline {
   border-color: #6d6a66;
   color: var(--text);

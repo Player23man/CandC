@@ -26,10 +26,18 @@ describe("site routes", () => {
       </MemoryRouter>
     );
 
-    await waitFor(() => expect(document.title).toBe("Portfolio | C&C Detailing"));
+    await waitFor(() => expect(document.title).toBe("Auto Detailing Portfolio | C&C Detailing"));
     expect(document.querySelector('meta[name="description"]')).toHaveAttribute(
       "content",
-      expect.stringContaining("vehicle detailing")
+      expect.stringContaining("paint correction")
+    );
+    expect(document.querySelector('meta[property="og:image"]')).toHaveAttribute(
+      "content",
+      "https://www.ccdetailingllc.com/images/cc-detailing-social-preview.jpg"
+    );
+    expect(document.querySelector('meta[name="twitter:title"]')).toHaveAttribute(
+      "content",
+      "Auto Detailing Portfolio | C&C Detailing"
     );
   });
 

@@ -2,19 +2,20 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 const siteUrl = "https://www.ccdetailingllc.com";
+const socialImageUrl = `${siteUrl}/images/cc-detailing-social-preview.jpg`;
 
 const routeMeta: Record<string, { title: string; description: string }> = {
   "/": {
     title: "C&C Detailing | Channahon, Illinois",
-    description: "Shop and mobile auto detailing, paint correction, and ceramic coating by appointment in Channahon, Illinois."
+    description: "C&C Detailing provides shop and mobile auto detailing, paint correction, ceramic coating, and marine detailing in Channahon, Illinois."
   },
   "/portfolio": {
-    title: "Portfolio | C&C Detailing",
-    description: "See vehicle detailing finishes, exterior work, paint correction, and ceramic coating from C&C Detailing."
+    title: "Auto Detailing Portfolio | C&C Detailing",
+    description: "See C&C Detailing transformations, finished vehicles, interior detailing, paint correction, and ceramic coating work from Channahon, Illinois."
   },
   "/contact": {
-    title: "Request a Quote | C&C Detailing",
-    description: "Request a vehicle detailing quote or contact C&C Detailing for shop and mobile service around Channahon, Illinois."
+    title: "Request an Auto Detailing Quote | C&C Detailing",
+    description: "Request a quote for shop or mobile auto detailing, paint correction, ceramic coating, or marine detailing from C&C Detailing in Channahon, Illinois."
   }
 };
 
@@ -50,6 +51,10 @@ export function RouteMeta() {
     upsertProperty("og:title", meta.title);
     upsertProperty("og:description", meta.description);
     upsertProperty("og:url", canonicalUrl);
+    upsertProperty("og:image", socialImageUrl);
+    upsertMeta("twitter:title", meta.title);
+    upsertMeta("twitter:description", meta.description);
+    upsertMeta("twitter:image", socialImageUrl);
 
     let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!canonical) {

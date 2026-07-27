@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
-import { buildQuoteMailto, ContactForm } from "../components/ContactForm";
+import { ContactForm } from "../components/ContactForm";
 import { ContactPage } from "../pages/ContactPage";
 
 it("renders the concierge campaign, contact rail, and request guidance", () => {
@@ -32,7 +32,7 @@ it("renders the concierge campaign, contact rail, and request guidance", () => {
 });
 
 describe("ContactForm", () => {
-  it("shows inline errors before preparing an email", async () => {
+  it("shows inline errors before sending a quote request", async () => {
     const user = userEvent.setup();
     render(<ContactForm />);
 
@@ -49,6 +49,17 @@ describe("ContactForm", () => {
     expect(screen.getByText("Tell us about your vehicle.")).toBeVisible();
     expect(screen.getByText("Choose at least one service.")).toBeVisible();
     expect(screen.getByRole("status")).toHaveTextContent("");
+  });
+
+  it("posts quote requests and selected photos to Formspree", () => {
+    render(<ContactForm />);
+
+    const form = document.querySelector("form.quote-form");
+    expect(form).toHaveAttribute("action", "https://formspree.io/f/xjgnjqjv");
+    expect(form).toHaveAttribute("method", "post");
+    expect(form).toHaveAttribute("enctype", "multipart/form-data");
+    expect(screen.getByText("Submitting sends your request directly to C&C.")).toBeVisible();
+    expect(screen.getByText("Selected photos will be included with your request.")).toBeVisible();
   });
 
   it("allows customers to select every service that applies", async () => {
@@ -107,20 +118,4 @@ describe("ContactForm", () => {
     expect(photos).toHaveAttribute("aria-required", "false");
   });
 
-  it("builds a recoverable email handoff from submitted details", () => {
-    const href = buildQuoteMailto({
-      name: "Alec",
-      phone: "815-555-0100",
-      email: "alec@example.com",
-      vehicle: "2022 Ford F-150",
-      service: ["Exterior Detail", "Interior Detailing"],
-      preference: "Mobile",
-      details: "Light swirl marks",
-      timing: "Next month"
-    });
-
-    expect(href).toContain("mailto:candcdetailing25%40gmail.com");
-    expect(decodeURIComponent(href)).toContain("C&C quote request: 2022 Ford F-150");
-    expect(decodeURIComponent(href)).toContain("Services: Exterior Detail, Interior Detailing");
-  });
 });

@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { businessProfile, services } from "../app/site-data";
+import { services } from "../app/site-data";
 
 export type QuoteFormValues = {
   name: string;
@@ -25,24 +25,6 @@ const initialValues: QuoteFormValues = {
   timing: ""
 };
 
-export function buildQuoteMailto(values: QuoteFormValues) {
-  const subject = `C&C quote request: ${values.vehicle}`;
-  const body = [
-    `Name: ${values.name}`,
-    `Phone: ${values.phone || "Not provided"}`,
-    `Email: ${values.email || "Not provided"}`,
-    `Vehicle: ${values.vehicle}`,
-    `Services: ${values.service.join(", ")}`,
-    `Shop or mobile: ${values.preference || "No preference"}`,
-    `Vehicle condition and details: ${values.details}`,
-    `Preferred timing: ${values.timing || "Not provided"}`,
-    "",
-    "Photos will be added manually if available."
-  ].join("\n");
-
-  return `mailto:${encodeURIComponent(businessProfile.email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-}
-
 function validateQuote(values: QuoteFormValues, photoCount: number): QuoteFormErrors {
   const errors: QuoteFormErrors = {};
 
@@ -62,7 +44,6 @@ function validateQuote(values: QuoteFormValues, photoCount: number): QuoteFormEr
 export function ContactForm() {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<QuoteFormErrors>({});
-  const [preparedMailto, setPreparedMailto] = useState("");
   const [status, setStatus] = useState("");
   const [photoCount, setPhotoCount] = useState(0);
   const requiresInteriorPhotos = values.service.includes("Interior Detailing");
@@ -88,29 +69,27 @@ export function ContactForm() {
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
     const nextErrors = validateQuote(values, photoCount);
     setErrors(nextErrors);
-    setPreparedMailto("");
     setStatus("");
 
-    if (Object.keys(nextErrors).length > 0) return;
-
-    const href = buildQuoteMailto(values);
-    setPreparedMailto(href);
-    setStatus("Your quote details are ready. Your email app should open with a prepared message.");
-    window.location.href = href;
-  };
-
-  const copyEmail = async () => {
-    if (navigator.clipboard) {
-      await navigator.clipboard.writeText(businessProfile.email);
-      setStatus("Email address copied.");
+    if (Object.keys(nextErrors).length > 0) {
+      event.preventDefault();
+      return;
     }
+
+    setStatus("Sending your quote request…");
   };
 
   return (
-    <form className="quote-form" noValidate onSubmit={handleSubmit}>
+    <form
+      className="quote-form"
+      action="https://formspree.io/f/xjgnjqjv"
+      method="post"
+      encType="multipart/form-data"
+      noValidate
+      onSubmit={handleSubmit}
+    >
       <div className="form-field">
         <label htmlFor="quote-name">Name <span aria-hidden="true">*</span></label>
         <input
@@ -261,24 +240,17 @@ export function ContactForm() {
           }}
         />
         {errors.photos && <p className="field-error" id="quote-photos-error">{errors.photos}</p>}
-        <p>Attachments cannot be transferred automatically. Add selected photos to the prepared email before sending.</p>
+        <p>Selected photos will be included with your request.</p>
       </div>
 
       <div className="quote-form__submit">
         <button className="button button--primary button--quote" type="submit" aria-label="Get a quote">
           Get a quote
         </button>
-        <p>Submitting prepares an email. It does not send anything automatically.</p>
+        <p>Submitting sends your request directly to C&C.</p>
       </div>
 
       <div className="quote-form__status" role="status" aria-live="polite">{status}</div>
-
-      {preparedMailto && (
-        <div className="email-fallback">
-          <p>If no mail app opened, email <a href={preparedMailto}>{businessProfile.email}</a>.</p>
-          <button type="button" onClick={copyEmail}>Copy email address</button>
-        </div>
-      )}
     </form>
   );
 }

@@ -35,7 +35,16 @@ export function SiteFooter() {
 
       <div className="shell site-footer__legal">
         <span>© {new Date().getFullYear()} {businessProfile.legalName}</span>
-        <span>Appointment only</span>
+        <a
+          className="site-footer__credit"
+          href="https://frontstagewebdesign.com"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Designed by Frontstage."
+        >
+          <span>Designed by </span>
+          <span className="site-footer__credit-wordmark">Frontstage.</span>
+        </a>
       </div>
     </footer>
   );

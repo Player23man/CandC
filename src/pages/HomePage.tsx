@@ -50,6 +50,38 @@ export function HomePage() {
         </div>
       </section>
 
+      <section className="loyalty-section" aria-labelledby="loyalty-title">
+        <div className="shell loyalty-section__inner">
+          <Reveal className="loyalty-section__image-wrap">
+            <img
+              src="/images/loyalty-punch-card.jpg"
+              alt="C&C Detailing loyalty punch card with four service punches and a free-detail reward"
+              loading="lazy"
+              decoding="async"
+            />
+          </Reveal>
+
+          <Reveal className="loyalty-section__content" delay={0.06}>
+            <h2 id="loyalty-title">C&amp;C Detailing loyalty punch cards are here.</h2>
+            <p className="loyalty-section__offer">
+              Complete 4 services. Your next interior or exterior detail is free.
+            </p>
+            <p className="loyalty-section__description">
+              Every qualifying service earns a punch. Fill your card, then choose a free interior or exterior detail.
+            </p>
+            <ul className="loyalty-section__terms">
+              <li>Valid for 30 months</li>
+              <li>Travel fee does not apply to your free detail</li>
+              <li>Valid for mobile and in-shop services</li>
+            </ul>
+            <Link className="text-link loyalty-section__link" to="/contact">
+              Book your next service
+              <ArrowRight size={18} weight="bold" aria-hidden="true" />
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
       <section className="home-portfolio" aria-labelledby="portfolio-preview-title">
         <div className="shell">
           <Reveal className="portfolio-preview__heading">

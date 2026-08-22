@@ -21,6 +21,7 @@
 }
 
 .service-board-section,
+.loyalty-section,
 .home-portfolio {
   padding-block: 92px;
 }
@@ -301,6 +302,87 @@
   margin-top: 34px;
 }
 
+.loyalty-section {
+  border-bottom: 1px solid var(--line);
+  background: var(--canvas);
+}
+
+.loyalty-section__inner {
+  display: grid;
+  gap: 42px;
+}
+
+.loyalty-section__image-wrap {
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.loyalty-section__image-wrap img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.loyalty-section__content {
+  align-self: center;
+}
+
+.loyalty-section h2 {
+  max-width: 11ch;
+  margin-bottom: 28px;
+  font-size: clamp(2.45rem, 9vw, 4.7rem);
+  font-weight: 750;
+  letter-spacing: -0.06em;
+  line-height: 0.96;
+}
+
+.loyalty-section__offer {
+  max-width: 620px;
+  margin-bottom: 18px;
+  color: var(--text);
+  font-size: clamp(1.3rem, 3.8vw, 2rem);
+  font-weight: 660;
+  letter-spacing: -0.035em;
+  line-height: 1.2;
+}
+
+.loyalty-section__description {
+  max-width: 570px;
+  margin-bottom: 30px;
+  color: var(--text-soft);
+  line-height: 1.65;
+}
+
+.loyalty-section__terms {
+  max-width: 620px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.loyalty-section__terms li {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+  padding: 8px 0;
+  color: var(--text-soft);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.loyalty-section__terms li::before {
+  color: var(--signal);
+  content: "✓";
+  font-size: 0.95rem;
+  font-weight: 760;
+  line-height: 1.35;
+}
+
+.loyalty-section__link {
+  margin-top: 30px;
+}
+
 .portfolio-preview__heading {
   display: flex;
   flex-direction: column;
@@ -447,8 +529,29 @@
 
 @media (min-width: 768px) {
   .service-board-section,
+  .loyalty-section,
   .home-portfolio {
     padding-block: 136px;
+  }
+
+  .loyalty-section__inner {
+    grid-template-columns: minmax(320px, 0.9fr) minmax(0, 1.1fr);
+    align-items: center;
+    gap: clamp(56px, 8vw, 132px);
+  }
+
+  .loyalty-section__image-wrap img {
+    min-height: 520px;
+  }
+
+  .loyalty-section__terms {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .loyalty-section__terms li {
+    align-content: start;
   }
 
   .service-board-section__heading {

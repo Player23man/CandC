@@ -88,4 +88,13 @@ describe("PortfolioPage", () => {
     expect(homepageProof.transformation.id).toBe("paint-correction");
     expect(homepageProof.supportingItems).toHaveLength(2);
   });
+
+  it("shows the cleaned engine bay as the after image", () => {
+    const engineBay = transformationPairs.find((pair) => pair.id === "engine-bay");
+
+    expect(engineBay?.before.src).toBe("/images/cc-engine-after.jpg");
+    expect(engineBay?.before.alt).toContain("before detailing");
+    expect(engineBay?.after.src).toBe("/images/cc-engine-before.jpg");
+    expect(engineBay?.after.alt).toContain("after detailing");
+  });
 });

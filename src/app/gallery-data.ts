@@ -91,13 +91,13 @@ export const transformationPairs: TransformationPair[] = [
     id: "engine-bay",
     label: "Engine bay before and after",
     before: {
-      src: "/images/cc-engine-before.jpg",
-      displaySrc: "/images/display/cc-engine-before.jpg",
+      src: "/images/cc-engine-after.jpg",
+      displaySrc: "/images/display/cc-engine-after.jpg",
       alt: "Engine bay with visible dust before detailing",
     },
     after: {
-      src: "/images/cc-engine-after.jpg",
-      displaySrc: "/images/display/cc-engine-after.jpg",
+      src: "/images/cc-engine-before.jpg",
+      displaySrc: "/images/display/cc-engine-before.jpg",
       alt: "Engine bay after detailing",
     },
   },

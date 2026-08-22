@@ -93,4 +93,31 @@ describe("HomePage", () => {
       screen.getByAltText("Blue Corvette with a reflective exterior finish"),
     ).toBeVisible();
   });
+
+  it("explains the loyalty punch-card offer and links to booking", () => {
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+
+    const loyaltySection = screen.getByRole("region", {
+      name: "C&C Detailing loyalty punch cards are here.",
+    });
+
+    expect(loyaltySection).toBeVisible();
+    expect(
+      screen.getByAltText("C&C Detailing loyalty punch card with four service punches and a free-detail reward"),
+    ).toHaveAttribute("src", "/images/loyalty-punch-card.jpg");
+    expect(screen.getByText(/Complete 4 services/)).toHaveTextContent(
+      "Complete 4 services. Your next interior or exterior detail is free.",
+    );
+    expect(screen.getByText("Valid for 30 months")).toBeVisible();
+    expect(screen.getByText("Travel fee does not apply to your free detail")).toBeVisible();
+    expect(screen.getByText("Valid for mobile and in-shop services")).toBeVisible();
+    expect(screen.getByRole("link", { name: "Book your next service" })).toHaveAttribute(
+      "href",
+      "/contact",
+    );
+  });
 });

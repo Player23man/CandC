@@ -6,7 +6,7 @@ export type Specialist = {
 };
 
 export type Service = {
-  id: "exterior" | "interior" | "correction" | "ceramic" | "marine";
+  id: "exterior" | "interior" | "correction" | "ceramic" | "marine" | "maintenance";
   name: string;
   price: string;
   description: string;
@@ -85,6 +85,14 @@ export const services: Service[] = [
       "Basic interior cleaning $10/ft",
       "Deep interior cleaning $30-$40/ft"
     ]
+  },
+  {
+    id: "maintenance",
+    name: "Maintenance Wash & Interior Refresh",
+    price: "From $55",
+    description: "Keep your vehicle clean between full details with a hand wash and a light interior refresh. Available as a mobile or in-shop service.",
+    details: ["Hand wash and hand dry", "Wheel cleaning", "Interior vacuum", "Quick interior dusting"],
+    priceNotes: ["Small sedans $55", "SUVs & regular trucks $65", "Large trucks $75", "Travel fee is additional for mobile service"]
   }
 ];
 

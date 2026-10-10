@@ -29,10 +29,7 @@ describe("ServiceBoard", () => {
     const activePanel = screen.getByRole("tabpanel");
 
     expect(screen.getByRole("tab", { name: /Exterior Detail/ })).toHaveAttribute("aria-selected", "true");
-    expect(within(serviceIndex).getByText("01")).toBeVisible();
-    expect(within(serviceIndex).getByText("04")).toBeVisible();
-    expect(within(serviceIndex).getByText("05")).toBeVisible();
-    expect(within(serviceIndex).getAllByRole("tab")).toHaveLength(5);
+    expect(within(serviceIndex).getAllByRole("tab")).toHaveLength(6);
     expect(activePanel).toHaveTextContent("Hand wax +$50");
     expect(activePanel.querySelectorAll(".service-board__spec-row").length).toBeGreaterThan(0);
     expect(activePanel.querySelector("ul")).toBeNull();
@@ -43,6 +40,17 @@ describe("ServiceBoard", () => {
 
     await user.click(screen.getByRole("tab", { name: /Marine Detailing/ }));
     expect(screen.getByRole("tabpanel")).toHaveTextContent("Wash, heavy oxidation removal, and wax $80-$100/ft");
+
+    await user.click(screen.getByRole("tab", { name: /Maintenance Wash & Interior Refresh/ }));
+    const maintenancePanel = screen.getByRole("tabpanel");
+    expect(maintenancePanel).toHaveTextContent("Small sedans $55");
+    expect(maintenancePanel).toHaveTextContent("SUVs & regular trucks $65");
+    expect(maintenancePanel).toHaveTextContent("Large trucks $75");
+    expect(maintenancePanel).toHaveTextContent("Travel fee is additional for mobile service");
+    expect(maintenancePanel).toHaveTextContent("Hand wash and hand dry");
+    expect(maintenancePanel).toHaveTextContent("Wheel cleaning");
+    expect(maintenancePanel).toHaveTextContent("Interior vacuum");
+    expect(maintenancePanel).toHaveTextContent("Quick interior dusting");
   });
 
   it("moves between services with arrow keys", async () => {
@@ -65,7 +73,7 @@ describe("ServiceBoard", () => {
     exterior.focus();
 
     await user.keyboard("{End}");
-    expect(screen.getByRole("tab", { name: /Marine Detailing/ })).toHaveFocus();
+    expect(screen.getByRole("tab", { name: /Maintenance Wash & Interior Refresh/ })).toHaveFocus();
     await user.keyboard("{Home}");
     expect(exterior).toHaveFocus();
   });
@@ -80,13 +88,8 @@ describe("ServiceBoard", () => {
     expect(container.querySelectorAll(".service-board img")).toHaveLength(1);
     const mobile = within(mobileControls as HTMLElement);
     const exteriorTrigger = mobile.getByRole("button", { name: /Exterior Detail/ });
-    const ceramicTrigger = mobile.getByRole("button", { name: /Ceramic Coating/ });
-    const marineTrigger = mobile.getByRole("button", { name: /Marine Detailing/ });
-    expect(mobile.getAllByRole("button")).toHaveLength(5);
+    expect(mobile.getAllByRole("button")).toHaveLength(6);
     expect(exteriorTrigger).toHaveAttribute("aria-expanded", "true");
-    expect(within(exteriorTrigger).getByText("01")).toBeVisible();
-    expect(within(ceramicTrigger).getByText("04")).toBeVisible();
-    expect(within(marineTrigger).getByText("05")).toBeVisible();
 
     await user.click(mobile.getByRole("button", { name: /Paint Correction/ }));
     expect(mobile.getByRole("button", { name: /Paint Correction/ })).toHaveAttribute("aria-expanded", "true");
@@ -95,8 +98,14 @@ describe("ServiceBoard", () => {
     expect(correctionRegion.querySelectorAll(".service-board__spec-row").length).toBeGreaterThan(0);
     expect(
       within(correctionRegion).getByRole("img", {
-        name: "Blue corrected paint reflecting the shop lights"
+        name: "Blue Corvette with a glossy, reflective exterior finish"
       })
-    ).toHaveAttribute("src", "/images/cc-paint-after.jpg");
+    ).toHaveAttribute("src", "/images/cc-corvette-finish.jpg");
+
+    await user.click(mobile.getByRole("button", { name: /Maintenance Wash & Interior Refresh/ }));
+    const maintenanceRegion = mobile.getByRole("region", { name: "Maintenance Wash & Interior Refresh details" });
+    expect(maintenanceRegion).toHaveTextContent("SUVs & regular trucks $65");
+    expect(maintenanceRegion).toHaveTextContent("Travel fee is additional for mobile service");
+    expect(mobile.queryByRole("region", { name: "Paint Correction details" })).not.toBeInTheDocument();
   });
 });

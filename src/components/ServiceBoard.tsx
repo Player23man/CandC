@@ -3,6 +3,10 @@ import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { services, type Service } from "../app/site-data";
 
 const serviceImages: Record<Service["id"], { src: string; alt: string }> = {
+  maintenance: {
+    src: "/images/cc-interior-floor-mat-clean.jpg",
+    alt: "Clean driver footwell with a vacuumed carpet and fitted floor mat"
+  },
   exterior: {
     src: "/images/detail-exterior.jpg",
     alt: "Vehicle receiving a careful hand wash"
@@ -12,8 +16,8 @@ const serviceImages: Record<Service["id"], { src: string; alt: string }> = {
     alt: "Clean light-colored vehicle seats and floor area"
   },
   correction: {
-    src: "/images/cc-paint-after.jpg",
-    alt: "Blue corrected paint reflecting the shop lights"
+    src: "/images/cc-corvette-finish.jpg",
+    alt: "Blue Corvette with a glossy, reflective exterior finish"
   },
   ceramic: {
     src: "/images/ceramic-display.jpg",
@@ -25,8 +29,6 @@ const serviceImages: Record<Service["id"], { src: string; alt: string }> = {
   }
 };
 
-const serviceNumber = (index: number) => String(index + 1).padStart(2, "0");
-
 function ServiceDetails({ service }: { service: Service }) {
   const image = serviceImages[service.id];
 
@@ -34,8 +36,10 @@ function ServiceDetails({ service }: { service: Service }) {
     <div className="service-board__details" key={service.id}>
       <div className="service-board__overview">
         <div>
-          <p className="service-board__price">{service.price}</p>
-          <h3>{service.name}</h3>
+          <div className="service-board__title-row">
+            <h3>{service.name}</h3>
+            <p className="service-board__price">{service.price}</p>
+          </div>
           <p className="service-board__description">{service.description}</p>
         </div>
       </div>
@@ -52,7 +56,7 @@ function ServiceDetails({ service }: { service: Service }) {
 
       <div className="service-board__specs">
         <div className="service-board__spec-group">
-          <p className="service-board__spec-title">Included in service</p>
+          <h4 className="service-board__spec-title">What’s included</h4>
           <div className="service-board__spec-list">
             {service.details.map((detail) => (
               <p className="service-board__spec-row" key={detail}>{detail}</p>
@@ -61,7 +65,7 @@ function ServiceDetails({ service }: { service: Service }) {
         </div>
         {service.priceNotes && (
           <div className="service-board__spec-group">
-            <p className="service-board__spec-title">Pricing &amp; options</p>
+            <h4 className="service-board__spec-title">Pricing &amp; options</h4>
             <div className="service-board__spec-list">
               {service.priceNotes.map((note) => (
                 <p className="service-board__spec-row" key={note}>{note}</p>
@@ -138,7 +142,6 @@ export function ServiceBoard() {
                   onClick={() => setActiveId(service.id)}
                   onKeyDown={(event) => handleTabKeyDown(event, index)}
                 >
-                  <span className="service-board__tab-number" aria-hidden="true">{serviceNumber(index)}</span>
                   <span className="service-board__tab-name">{service.name}</span>
                   <small>{service.price}</small>
                 </button>
@@ -158,7 +161,7 @@ export function ServiceBoard() {
         </div>
       ) : (
         <div className="service-board__mobile">
-          {services.map((service, index) => {
+          {services.map((service) => {
             const isActive = service.id === activeId;
             return (
               <div className="service-board__mobile-item" key={service.id}>
@@ -169,7 +172,6 @@ export function ServiceBoard() {
                   aria-controls={`service-mobile-panel-${service.id}`}
                   onClick={() => setActiveId(service.id)}
                 >
-                  <span className="service-board__mobile-number" aria-hidden="true">{serviceNumber(index)}</span>
                   <span className="service-board__mobile-label">
                     <strong>{service.name}</strong>
                     <small>{service.price}</small>

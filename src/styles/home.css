@@ -121,27 +121,17 @@
   display: grid;
   width: 100%;
   min-height: 94px;
-  grid-template-columns: 36px minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 16px;
   border: 0;
-  padding: 18px 0;
+  padding: 22px 12px;
   background: transparent;
   color: var(--text);
   text-align: left;
   cursor: pointer;
 }
 
-.service-board__mobile-number {
-  align-self: start;
-  padding: 5px 0 0 8px;
-  color: #837d74;
-  font-size: 0.75rem;
-  font-variant-numeric: tabular-nums;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  transition: color 180ms ease;
-}
 
 .service-board__mobile-label {
   display: grid;
@@ -155,11 +145,9 @@
 }
 
 .service-board__mobile-trigger small {
-  color: var(--signal-text);
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.035em;
-  text-transform: uppercase;
+  color: var(--signal);
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
 .service-board__mobile-trigger svg {
@@ -177,9 +165,6 @@
   box-shadow: inset 3px 0 0 var(--signal);
 }
 
-.service-board__mobile-trigger[aria-expanded="true"] .service-board__mobile-number {
-  color: var(--signal);
-}
 
 .service-board__mobile-trigger:focus-visible,
 .service-board__tab:focus-visible {
@@ -195,7 +180,7 @@
 }
 
 .service-board__mobile-panel {
-  padding: 4px 0 48px 52px;
+  padding: 8px 12px 36px;
 }
 
 .service-board__details {
@@ -216,6 +201,15 @@
   }
 }
 
+.service-board__title-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin-bottom: 12px;
+}
+
 .service-board__overview {
   display: flex;
   align-items: start;
@@ -223,13 +217,16 @@
   gap: 24px;
 }
 
+.service-board__overview > div {
+  width: 100%;
+}
+
 .service-board__price {
-  margin-bottom: 12px;
+  margin: 0;
   color: var(--signal);
-  font-size: 0.82rem;
-  font-weight: 750;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  font-size: 1.1rem;
+  font-weight: 550;
+  white-space: nowrap;
 }
 
 .service-board__mobile .service-board__price,
@@ -253,7 +250,7 @@
 }
 
 .service-board__image-wrap {
-  min-height: 250px;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   background: var(--surface-strong);
 }
@@ -261,7 +258,6 @@
 .service-board__image-wrap img {
   width: 100%;
   height: 100%;
-  min-height: 250px;
   object-fit: cover;
 }
 
@@ -277,10 +273,9 @@
 .service-board__spec-title {
   margin: 0 0 11px;
   color: var(--text);
-  font-size: 0.72rem;
-  font-weight: 720;
-  letter-spacing: 0.075em;
-  text-transform: uppercase;
+  font-size: 1.1rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
 }
 
 .service-board__spec-list {
@@ -570,29 +565,31 @@
 
   .service-board__desktop {
     display: grid;
-    grid-template-columns: minmax(270px, 0.72fr) minmax(0, 1.55fr);
+    grid-template-columns: minmax(220px, 0.65fr) minmax(0, 1.6fr);
+    gap: clamp(28px, 5vw, 80px);
+    padding-block: 40px;
     border-bottom: 1px solid var(--line);
   }
 
   .service-board__tabs {
-    display: grid;
-    grid-template-rows: repeat(4, minmax(132px, 1fr));
-    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    align-self: start;
   }
 
   .service-board__tab {
     position: relative;
     display: grid;
     width: 100%;
-    min-height: 132px;
-    grid-template-columns: 40px minmax(0, 1fr);
+    min-height: 96px;
+    grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto auto;
     align-content: center;
     column-gap: 16px;
     row-gap: 8px;
     border: 0;
     border-bottom: 1px solid var(--line);
-    padding: 28px clamp(20px, 2.6vw, 40px);
+    padding: 22px 20px;
     background: transparent;
     color: var(--text-muted);
     text-align: left;
@@ -630,19 +627,7 @@
     transform: scaleY(1);
   }
 
-  .service-board__tab-number {
-    grid-row: 1 / -1;
-    padding-top: 5px;
-    color: #8a847b;
-    font-size: 0.73rem;
-    font-variant-numeric: tabular-nums;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-  }
 
-  .service-board__tab[data-active="true"] .service-board__tab-number {
-    color: var(--signal);
-  }
 
   .service-board__tab-name {
     font-size: clamp(1.2rem, 1.65vw, 1.55rem);
@@ -652,24 +637,21 @@
   }
 
   .service-board__tab small {
-    grid-column: 2;
-    color: var(--signal-text);
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    color: var(--signal);
+    font-size: 0.95rem;
+    font-weight: 500;
   }
 
   .service-board__panel {
     min-width: 0;
-    padding: clamp(36px, 4.7vw, 68px);
+    padding: 0;
     background: var(--surface);
   }
 
   .service-board__details {
     grid-template-columns: minmax(0, 1fr);
     align-items: stretch;
-    gap: clamp(28px, 4vw, 56px);
+    gap: 28px;
   }
 
   .service-board__overview {
@@ -677,11 +659,7 @@
   }
 
   .service-board__image-wrap {
-    min-height: 410px;
-  }
-
-  .service-board__image-wrap img {
-    min-height: 410px;
+    aspect-ratio: 16 / 10;
   }
 
   .service-board__specs {
@@ -754,21 +732,6 @@
   }
 }
 
-@media (min-width: 1100px) {
-  .service-board__details {
-    grid-template-columns: minmax(0, 1.48fr) minmax(250px, 0.72fr);
-  }
-
-  .service-board__image-wrap,
-  .service-board__image-wrap img {
-    min-height: 540px;
-  }
-
-  .service-board__specs {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-}
 
 @media (max-width: 540px) {
   .campaign-hero__actions .button:not(.button--quote) {

@@ -68,7 +68,10 @@ describe("ContactForm", () => {
 
     expect(screen.getByText("Choose all services that apply.")).toBeVisible();
     const serviceChoices = screen.getAllByRole("checkbox");
-    expect(serviceChoices).toHaveLength(6);
+    expect(serviceChoices).toHaveLength(7);
+    expect(screen.getByRole("checkbox", { name: "Maintenance Wash & Interior Refresh" })).toHaveAttribute(
+      "value", "Maintenance Wash & Interior Refresh"
+    );
 
     for (const serviceChoice of serviceChoices) {
       await user.click(serviceChoice);
